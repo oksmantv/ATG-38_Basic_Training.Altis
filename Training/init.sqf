@@ -26,7 +26,7 @@ LiveRunCode = compile preprocessFileLineNumbers "Training\LiveRunCode.sqf";
 3DReportSpawner = compile preprocessFileLineNumbers "Training\3DReportSpawner.sqf";
 3DReportAction = compile preprocessFileLineNumbers "Training\3DReportAction.sqf";
 //Attack_DoMove = compile preprocessFileLineNumbers "Training\Attack_DoMove.sqf";
-MedicalQualificationPatients = compile preprocessFileLineNumbers "Medical\MedicalQualificationPatients.sqf";
+MedicalQualificationPatients = compile preprocessFileLineNumbers "Training\Medical\MedicalQualificationPatients.sqf";
 // AmbushActivate = compile preprocessFileLineNumbers "Training\AmbushActivate.sqf";
 // AmbushAction = compile preprocessFileLineNumbers "Training\AmbushAction.sqf";
 // ConvoySpawn = compile preprocessFileLineNumbers "Scripts\OKS_Spawn\OKS_Convoy_Spawn.sqf";
@@ -34,13 +34,13 @@ MedicalQualificationPatients = compile preprocessFileLineNumbers "Medical\Medica
 
 // AT Range
 OKS_AT_Spawn_Active = false; sleep 1;
-[AT_Range_PC,"<t color='#2acb1f'>Activate Range</t>","OKS_AT_Spawn_Active",false,false,true,"OKS_AT_Spawn_Active == false"] execVM "Scripts\NEKY_AddAction.sqf"; sleep 1;
-[AT_Range_PC,"<t color='#2acb1f'>Deactivate Range</t>","OKS_AT_Spawn_Active",false,false,false,"OKS_AT_Spawn_Active == true"] execVM "Scripts\NEKY_AddAction.sqf"; sleep 1;
+[AT_Range_PC,"<t color='#2acb1f'>Activate Range</t>","OKS_AT_Spawn_Active",false,false,true,"OKS_AT_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
+[AT_Range_PC,"<t color='#2acb1f'>Deactivate Range</t>","OKS_AT_Spawn_Active",false,false,false,"OKS_AT_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
 
 // AA Range
 OKS_AA_Spawn_Active = false; sleep 1;
-[AT_Range_PC,"<t color='#1A98FD'>Activate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,true,"OKS_AA_Spawn_Active == false"] execVM "Scripts\NEKY_AddAction.sqf"; sleep 1; 
-[AT_Range_PC,"<t color='#1A98FD'>Deactivate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,false,"OKS_AA_Spawn_Active == true"] execVM "Scripts\NEKY_AddAction.sqf";
+[AT_Range_PC,"<t color='#1A98FD'>Activate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,true,"OKS_AA_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1; 
+[AT_Range_PC,"<t color='#1A98FD'>Deactivate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,false,"OKS_AA_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf";
 
 
 // // Ambush

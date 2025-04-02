@@ -48,7 +48,7 @@ private ["_TimeLimit"];
 
 		waitUntil{PrimaryWeapon _Unit != ""};
 		removeAllWeapons _Unit;
-		[_Unit,"qualification"] execVM "Medical\MedicalDamage.sqf";
+		[_Unit,"qualification"] execVM "Training\Medical\MedicalDamage.sqf";
 		waitUntil{_Unit getVariable ["GOL_Qualification_Ready",false]};
 		_Pos = (getPosATL _SpawnPos) getPos [2,_Direction];
 		_Unit setPosATL _Pos;

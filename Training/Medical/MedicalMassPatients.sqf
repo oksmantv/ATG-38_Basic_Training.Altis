@@ -61,7 +61,7 @@ switch (_numOfPatients) do {
 				_randNum = random [0, (floor (count _positions / 2)), (count _positions)];
 			};
 			_numArray pushBackUnique _randNum;
-			[_object, (_positions select _randNum), "fatal"] execVM "Medical\MedicalPatient.sqf";
+			[_object, (_positions select _randNum), "fatal"] execVM "Training\Medical\MedicalPatient.sqf";
 		};
 	};
 };

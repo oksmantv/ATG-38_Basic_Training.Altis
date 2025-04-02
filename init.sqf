@@ -1,11 +1,12 @@
 	MISSION_ROOT = call { private "_arr"; _arr = toArray __FILE__; _arr resize (count _arr - 8); toString _arr};
 
 	/* Set GOL Mission Settings */
-	Call Compile PreProcessFileLineNumbers "MissionSettings.sqf";	
+	OKS_MissionSettings = Compile PreProcessFileLineNumbers "MissionSettings.sqf";
+	if(isServer) then {
+		[] remoteExec ["OKS_MissionSettings",0]
+	};
 	Sleep 5;
-	execVM "FAC_Teleport.sqf";
-	execVM "Training\Init.sqf";
-	execVM "Medical\Init.sqf";
+
 	execVM "Scripts\GOL_PlayerSetup\init.sqf";
 	execVM "Scripts\OKS_Vehicles\Init.sqf";	
 	if(GOL_NEKY_SERVICESTATION isEqualTo 1) then { execVM "Scripts\NEKY_ServiceStation\Init.sqf"};
@@ -16,3 +17,7 @@
 	if(GOL_OKS_DYNAMIC isEqualTo 1) then { execVM "Scripts\OKS_Dynamic\Init.sqf"};
 	if(GOL_NEKY_TASK isEqualTo 1) then { execVM "Scripts\NEKY_Tasks\Init.sqf"};	
 	if(GOL_OKS_TASK isEqualTo 1) then { execVM "Scripts\OKS_TASK\Init.sqf"};
+
+	execVM "Training\FAC_Teleport.sqf";
+	execVM "Training\Init.sqf";
+	execVM "Training\Medical\Init.sqf";
