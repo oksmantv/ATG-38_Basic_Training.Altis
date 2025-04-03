@@ -34,17 +34,20 @@ if (Count _VehTypes == 0) exitWith {};
 _VehTypes = _VehTypes apply {toLower _x};
 _Filter = [];
 _Kind = "";
+_Image = "";
 {
 	Switch _x do 
 	{
-		case "car": { _Filter pushBack "car"; _Kind = "Car" };
-		case "ifv": { _Filter pushBack "car"; _Kind = "Armored" };
-		case "tank": { _Filter pushBack "tank" };
-		case "helicopter": { _Filter pushBack "helicopter";  };
-		case "plane": { _Filter pushBack "plane";  };
+		case "car": { _Filter pushBack "car"; _Kind = "Car"; _Image = "Images\cars.jpg" };
+		case "ifv": { _Filter pushBack "car"; _Kind = "Armored"; _Image = "Images\ifv.jpg" };
+		case "tank": { _Filter pushBack "tank"; _Image = "Images\tanks.jpg" };
+		case "helicopter": { _Filter pushBack "helicopter"; _Image = "Images\helicopter.jpg"  };
+		case "plane": { _Filter pushBack "plane"; _Image = "Images\plane.jpg"  };
 		default { systemChat "DEBUG VehicleRequest.sqf - Unknown type" };
 	};
 } forEach _VehTypes;
+
+_Laptop setObjectTextureGlobal [0,_Image];
 
 // Define Vehicles
 _C1 = Format ["_TempVehClass = ConfigName _x; (getNumber (_x >> 'Scope') == 2) && (({ _TempVehClass isKindOf _x } count %1) != 0)", _Filter];
