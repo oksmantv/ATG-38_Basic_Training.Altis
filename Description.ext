@@ -14,15 +14,16 @@ class GW_FRAMEWORK {	// NOTE: SENSETIVE, UPPERCASE ONLY FOR BOOL
 		Version = QUOTE(VERSION);
 	};
 
-	class Naming {		//	NOTE: Changing any of these settings will require mission reload for it to be affected
-		#define GAME_MODE "ATG"									// GameMode
-		#define PLAYER_COUNT "36"								// Player Count
-		#define BRIEFING_NAME "Basic Training 9.1"						// Mission Name
+	class Naming {		
+		//	NOTE: Changing any of these settings will require mission reload for it to be affected
+		#define GAME_MODE "ATG"								// GameMode
+		#define PLAYER_COUNT "36"								// Player Count - Do not go above 36 - Server Limit 
+		#define BRIEFING_NAME "Basic Training 9.2"					// Mission Name
 		#define LOBBY_DESCRIPTION ""							// Description in mission select
 		#define ON_LOAD_TEXT ""									// Description on loading
 		#define MISSION_VERSION 1								// Version of mission
 		#define SELECT_PICTURE ""								// Path to loading screen
-		//#define SELECT_PICTURE RANDOM_PICTURES					// Random loading screen
+		//#define SELECT_PICTURE RANDOM_PICTURES				// Random loading screen
 
 		Author = "Oksman";				// Author
 		AuthorUID[] = {"_SP_PLAYER_"};			// UIDs with admin access
@@ -63,8 +64,18 @@ enableDebugConsole = 1;
 joinUnassigned = 1;
 scriptedPlayer = 1;
 
-corpseManagerMode = 0;
-wreckManagerMode = 0;
+corpseManagerMode = 3;
+corpseLimit = 25; // Default: 15
+corpseRemovalMinTime = 120; // seconds. Default: 10
+corpseRemovalMaxTime = 600; // seconds. Default: 3600
+disposalCheckPeriod = 30; // seconds. Default: 10
+minPlayerDistance[] = {250, 1000, 0}; // meters. Default: {0, 0, 0}
+weaponholderManagerMode = 0; // Default: 0
+wreckManagerMode = 1;
+wreckLimit = 10; // seconds. Default: 15
+wreckRemovalMinTime = 180; // seconds. Default: 10
+wreckRemovalMaxTime = 900; // seconds. Default: 36000 (10 hours)
+
 
 respawn = "BASE";
 respawnOnStart = 0;
@@ -72,10 +83,6 @@ respawnOnStart = 0;
 // Comment this to remove default respawn.
 respawnTemplates[] = {"Counter"};
 respawnDelay = 20;
-
-// Uncomment this for Spectator
-//respawnTemplates[] = {"ACE_Spectator"};
-//respawnDelay = 648000;
 
 class CfgSounds
 {
@@ -201,10 +208,32 @@ class CfgSounds
 
 };
 
+// Uncomment this for Spectator
+//respawnTemplates[] = {"ACE_Spectator"};
+//respawnDelay = 648000;
+
 class Params {
 	#define LOAD_PARAMS
 		#include "Modules\Modules.cpp"
 	#undef LOAD_PARAMS
+
+	// If you want to enable dynamic time selection at mission setup.
+	// class Daytime
+	// {
+	// 	title = "Time";
+	// 	texts[] = { "Dawn", "Noon", "Afternoon", "Evening", "Night" };
+	// 	values[] = { 5.6, 12, 16, 19, 23 };
+	// 	default = 23;
+	// 	function = "BIS_fnc_paramDaytime";
+	// };	
+
+	class ShouldGiveMedicalToAsstGunner
+	{
+		title = "Should Asst. Gunner have medical supplies?";
+		texts[] = { "No", "Yes" };
+		values[] = { 0, 1 };
+		default = 0;
+	};		
 };
 
 class CfgFunctions {
@@ -233,6 +262,17 @@ class CfgFunctions {
 				preInit = 1;
 			};
 		};
+	};
+};
+
+class CfgUnitInsignia
+{
+	class GOL_Insignia_Hellfish
+	{
+		displayName = "1st Squad - Flying Hellfish";	// name displayed in Arsenal
+		author = "Bohemia Interactive";				// author displayed in Arsenal
+		texture = "Images\hellfish.paa"; // image path
+		textureVehicle = "";						// does nothing, was reserved for future use
 	};
 };
 
@@ -273,4 +313,3 @@ class ACE_Settings {
 
 #include "Modules\Callsigns\defines.hpp"
 #include "Modules\Callsigns\dialogs.hpp"
-

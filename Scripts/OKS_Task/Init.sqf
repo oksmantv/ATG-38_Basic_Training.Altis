@@ -21,4 +21,4 @@ OKS_Destroy_Barricade = compile preprocessFileLineNumbers "Scripts\OKS_TASK\OKS_
 OKS_Destroy_Task = compile preprocessFileLineNumbers "Scripts\OKS_TASK\OKS_Destroy_Task.sqf";
 OKS_ClearImmediateArea = compile preprocessFileLineNumbers "Scripts\OKS_TASK\OKS_ClearImmediateArea.sqf";
 
-//execVM "Scripts\OKS_Task\OKS_RescueFriendly\init.sqf";
+execVM "Scripts\OKS_Task\OKS_RescueFriendly\init.sqf";

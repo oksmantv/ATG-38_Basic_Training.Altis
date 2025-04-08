@@ -54,14 +54,6 @@ Params ["_Terminals","_Flags","_Targets"];
     ];    
 } foreach _Terminals;
 
-GOL_SpawnPeelingContact = {
-
-};
-
-_MainTrigger = createTrigger ["EmptyDetector", getpos (selectRandom _Terminals)];
-_MainTrigger setTriggerArea [0, 0, 0, false];
-_MainTrigger setTriggerActivation ["NONE", "PRESENT", true];
-_MainTrigger setTriggerStatements ["false", "hint 'trigger on'", "hint 'trigger off'"];
 
 // Actions on Flags to teleport.
 {
@@ -88,22 +80,13 @@ _MainTrigger setTriggerStatements ["false", "hint 'trigger on'", "hint 'trigger 
 if(isServer) then {
     // Loop to check if Variable active, spawn if active.
     while {true} do {
-        waitUntil {sleep 5; missionNameSpace getVariable ['OKS_BasicPeel_Active',false]};
         if(missionNameSpace getVariable ['OKS_BasicPeel_Active',false]) then {
-            if(!(missionNameSpace getVariable ['OKS_BasicPeel_Live',false])) then {
-                missionNameSpace setVariable ['OKS_BasicPeel_Live',true,true];
-                "Basic Peel Course is live." remoteExec ["systemChat",0];
-                {
-                    [_X,"rush",1,east,500,[],_MainTrigger, 30] spawn OKS_Lambs_Spawner;
+            {
+                if(missionNameSpace getVariable ['OKS_BasicPeel_Active',false] && !(_X getVariable ["OKS_SpawnActive",false])) then {
+                    [_X,"rush",1,east,500,[]] spawn OKS_Lambs_SpawnGroup;
                     sleep 10;
-                } foreach _Targets;
-            };
-        } else {
-            missionNameSpace setVariable ['OKS_BasicPeel_Live',false,true];
-            _MainTrigger setTriggerStatements ["true", "hint 'trigger on'", "hint 'trigger off'"];
-
-            waitUntil {sleep 1; triggerActivated _MainTrigger};
-            _MainTrigger setTriggerStatements ["false", "hint 'trigger on'", "hint 'trigger off'"];
+                }
+            } foreach _Targets;    
         };
         sleep 10;
     };
