@@ -27,7 +27,6 @@
 		if(typeName _ActivatedToDisableSpawner == "OBJECT") then {
 			_Condition1 = (!triggerActivated _ActivatedToDisableSpawner);
 			_Condition2 = (triggerActivated _ActivatedToDisableSpawner);
-			_SpawnPos setVariable ["OKS_SpawnActivated",true,true];
 		};
 		if(typeName _ActivatedToDisableSpawner == "STRING") then {
 			Call Compile Format ["%1 = false",_ActivatedToDisableSpawner];
@@ -77,16 +76,11 @@
 
 			waitUntil { sleep 5; {Alive _X || [_X] call ace_common_fnc_isAwake} count units _Group < 1};
 			systemChat format["Group destroyed or unconscious. Passed WaitUntil. Sleep: %1",_RespawnDelay];
-			if(_Condition2) exitWith {
-				systemChat "Spawner Disabled.";
-				_SpawnPos setVariable ["OKS_SpawnActivated",false,true];
-			};			
 			sleep (_RespawnDelay * OKS_ResponseMultiplier);
 		};
 		
 		if(_Condition2) exitWith {
 			systemChat "Spawner Disabled.";
-			_SpawnPos setVariable ["OKS_SpawnActivated",false,true];
 		};
 		sleep 10;
 	};

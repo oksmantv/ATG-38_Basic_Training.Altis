@@ -7,9 +7,7 @@
  	if(!isServer) exitWith {};
 
 	Params ["_SpawnPos","_LambsType",["_NumberInfantry",5,[0]],["_Side",east,[sideUnknown]],["_Range",1500,[0]],["_Array",[],[[]]]];
-	private ["_RandomPos","_Center","_InternalUnitArray"];
-	_InternalUnitArray = [];
-	_SpawnPos setVariable ["OKS_SpawnActive",true,true];
+	private ["_RandomPos","_Center"];
 
 	_Settings = [_Side] call OKS_Dynamic_Setting;
 	_Settings Params ["_UnitArray","_SideMarker","_SideColor","_Vehicles","_Civilian","_Trigger"];
@@ -23,7 +21,6 @@
 		{
 			_Unit = _Group CreateUnit [(_Leaders call BIS_FNC_selectRandom), _SpawnPos getPos [(5+(random 5)),(random 360)], [], 0, "NONE"];
 			_Unit setRank "SERGEANT";
-			_InternalUnitArray pushBackUnique _Unit;
 		} else {
 			if(count (units _Group) == 1) then {
 				_Unit = _Group CreateUnit [(_Units select 0), _SpawnPos getPos [(5+(random 5)),(random 360)], [], 0, "NONE"];
@@ -31,7 +28,6 @@
 				_Unit = _Group CreateUnit [(_Units call BIS_FNC_selectRandom), _SpawnPos getPos [(5+(random 5)),(random 360)], [], 0, "NONE"];
 			};			
 			_Unit setRank "PRIVATE";
-			_InternalUnitArray pushBackUnique _Unit;
 		};
 		sleep 0.5;
 	};
@@ -90,7 +86,4 @@
 			[_Group,_Range,10,[],[],false] remoteExec ["lambs_wp_fnc_taskRush",0];	
 		};
 	};
-
-	waitUntil {sleep 1; {Alive _X || [_X] call ace_common_fnc_isAwake} count units _Group == 0};
-	_SpawnPos setVariable ["OKS_SpawnActive",false,true];
 

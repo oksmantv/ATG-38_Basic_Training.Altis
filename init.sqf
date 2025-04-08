@@ -1,10 +1,16 @@
 	MISSION_ROOT = call { private "_arr"; _arr = toArray __FILE__; _arr resize (count _arr - 8); toString _arr};
+	
+	// Framework Missing Objects Check.
+	OKS_CheckFrameworkObjects = compile preprocessFileLineNumbers "Scripts\GOL_PlayerSetup\OKS_CheckFrameworkObjects.sqf";
+	if(isServer && !(isDedicated)) then {
+		waitUntil {sleep 1; !isNil "OKS_CheckFrameworkObjects"};
+		_Return = call OKS_CheckFrameworkObjects;
+		systemChat _Return;
+		copyToClipboard _Return;
+	};
 
 	/* Set GOL Mission Settings */
-	OKS_MissionSettings = Compile PreProcessFileLineNumbers "MissionSettings.sqf";
-	if(isServer) then {
-		[] remoteExec ["OKS_MissionSettings",0]
-	};
+	call Compile PreProcessFileLineNumbers "MissionSettings.sqf";
 	Sleep 5;
 
 	execVM "Scripts\GOL_PlayerSetup\init.sqf";

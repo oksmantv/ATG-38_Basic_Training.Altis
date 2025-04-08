@@ -42,6 +42,7 @@ ACE_maxWeightCarry = 1400;
 ACE_maxWeightDrag = 2200;
 
 /* Logistics & Support Settings */
+enableEngineArtillery false; // Enable/Disable Artillery Computer (Undefined = true)
 GOL_NEKY_SERVICESTATION = 1;
 GOL_NEKY_RESUPPLY = 1;
 GOL_NEKY_PARADROP = 0; // Requires Additional Script
@@ -71,8 +72,13 @@ GOL_OKS_Tracker = 0; // Requires Additional Script
 /* HuntBases */
 GOL_NEKY_HUNT = 1;
 GOL_NEKY_AIRDROP = 1;
-OKS_ForceMultiplier = 1; // Force Multiplier - Adjusts the values for spawns by Hunt (Increase soldiers by % - Cargo in Vehicles by % - Waves increased by %)
-OKS_ResponseMultiplier = 1; // Reponse Multiplier - Adjusts the value for respawn/refresh by Hunt (Increase respawn delay by % - Increase refresh delay by %)
+
+if(isNil "OKS_ForceMultiplier") then {
+	OKS_ForceMultiplier = 1; // Force Multiplier - Adjusts the values for spawns by Hunt (Increase soldiers by % - Cargo in Vehicles by % - Waves increased by %)
+};
+if(isNil "OKS_ResponseMultiplier") then {
+	OKS_ResponseMultiplier = 1; // Reponse Multiplier - Adjusts the value for respawn/refresh by Hunt (Increase respawn delay by % - Increase refresh delay by %)
+};
 
 /* HuntBases Settings */
 NEKY_Hunt_MaxCount = 40;
