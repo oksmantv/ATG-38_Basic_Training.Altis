@@ -24,10 +24,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={14189.848,41.699429,16287.177};
-		dir[]={0.51691872,-0.65683067,-0.54897577};
-		up[]={0.45027885,0.75403512,-0.47820282};
-		aside[]={-0.72804582,-6.7288056e-08,-0.68553209};
+		pos[]={14181.479,41.699429,16287.122};
+		dir[]={0.65139782,-0.5159573,-0.55630535};
+		up[]={0.39235264,0.85661191,-0.33507577};
+		aside[]={-0.64942276,2.438901e-08,-0.76043189};
 	};
 };
 binarizationWanted=0;
@@ -588,7 +588,7 @@ randomSeed=15706391;
 class ScenarioData
 {
 	author="Oksman, Blu";
-	overviewText="Framework Version 2.5";
+	overviewText="Framework Version 2.6";
 	overViewPicture="loadImage.jpg";
 	overViewPictureLocked="loadImage.jpg";
 	loadScreen="loadImage.jpg";
@@ -18659,8 +18659,8 @@ class Mission
 {
 	class Intel
 	{
-		briefingName="Basic Training  9.2";
-		overviewText="Framework Version 2.4";
+		briefingName="Basic Training 10.0";
+		overviewText="Framework Version 2.6";
 		resistanceWest=0;
 		resistanceEast=1;
 		timeOfChanges=1800.0002;
