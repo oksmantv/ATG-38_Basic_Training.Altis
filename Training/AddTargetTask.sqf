@@ -14,7 +14,7 @@ _CreateTarget = {
 	Params ["_TargetObject","_Side"];
 	Private ["_Text","_Vehicle"];
 
-	_Settings = [_Side] call OKS_Dynamic_Setting;
+	_Settings = [_Side] call OKS_fnc_Dynamic_Setting;
 	_Settings Params ["_UnitArray","_SideMarker","_SideColor","_Vehicles","_Civilian","_ObjectiveTypes","_Configuration"];
 	_UnitArray Params ["_Leaders","_Units","_Officer"];
 	_Vehicles Params ["_Wheeled","_APC","_Tank","_Artillery","_Helicopter","_Transport","_Supply","_AntiAir"];
@@ -78,13 +78,13 @@ _Timer = {
 		// 	!Alive _EnemyVehicle];
 		if(isNull _EnemyVehicle && {!alive _X || _X getVariable ["ACE_isUnconscious",false]} count units _TargetGroup isEqualTo count units _TargetGroup) exitWith {
 			//systemChat "Infantry Squad Destroyed";
-			["HQ","side",format["%2 - Target %1 - Time from Smoke to completion: %3 seconds at distance %4 meters",_Count,name _Player,_Time,round(vehicle _Player distance (vehicle (leader _TargetGroup)))]] remoteExec ["OKS_Chat",0];
+			["HQ","side",format["%2 - Target %1 - Time from Smoke to completion: %3 seconds at distance %4 meters",_Count,name _Player,_Time,round(vehicle _Player distance (vehicle (leader _TargetGroup)))]] remoteExec ["OKS_fnc_Chat",0];
 			{deleteVehicle _X} foreach units _TargetGroup;
 			break;
 		};
 		if(!isNull _EnemyVehicle && !Alive _EnemyVehicle) exitWith {
 			//systemChat "Vehicle Destroyed";
-			["HQ","side",format["%2 - Target %1 - Time from Smoke to completion: %3 seconds at distance %4 meters",_Count,name _Player,_Time,round(vehicle _Player distance (vehicle (leader _TargetGroup)))]] remoteExec ["OKS_Chat",0];
+			["HQ","side",format["%2 - Target %1 - Time from Smoke to completion: %3 seconds at distance %4 meters",_Count,name _Player,_Time,round(vehicle _Player distance (vehicle (leader _TargetGroup)))]] remoteExec ["OKS_fnc_Chat",0];
 			{deleteVehicle _X} foreach units _TargetGroup;
 			deleteVehicle _EnemyVehicle;
 			break;
@@ -165,7 +165,7 @@ For "_i" from 0 to (count _CurrentArrayOfTargets - 1) do {
 	_marker setMarkerSize [0.8,0.8];
 
 	if(isNull (objectParent _Player))  then {
-		["HQ","side",format["Task will be given when you have occupied your selected vehicle."]] remoteExec ["OKS_Chat",0];
+		["HQ","side",format["Task will be given when you have occupied your selected vehicle."]] remoteExec ["OKS_fnc_Chat",0];
 	};
 	
 	waitUntil {sleep 1; (objectParent _Player) isKindOf "Helicopter" || (objectParent _Player) isKindOf "Plane"};
@@ -175,7 +175,7 @@ For "_i" from 0 to (count _CurrentArrayOfTargets - 1) do {
 
 	_Task = format ["TargetTaskId_%1",_Count + 1];
 	[_Player, [_Task,format ["TargetTask_Main_%1",name _Player]], [format["A friendly force has requested that you strike %4 at the <font color='#84e4ff'><marker name = '%1'>target location</marker></font color>. Ingress %2, Egress %3.",_marker,_IngressCardinal,_EgressCardinal,_Text], format["CAS Target %1",_Count], "Target"], objNull,"ASSIGNED",-1, true,"attack", false] call BIS_fnc_taskCreate;
-	["HQ","side",format["%5 - Requesting CAS. Ingress %2. Egress %3. Red smoke & laser on %6 when within %4 meters and at minimum altitude of %7 meters, out!",_Text,_IngressCardinal,_EgressCardinal,_DistanceForSmoke,name _Player,_Text,_Altitude]] remoteExec ["OKS_Chat",0];
+	["HQ","side",format["%5 - Requesting CAS. Ingress %2. Egress %3. Red smoke & laser on %6 when within %4 meters and at minimum altitude of %7 meters, out!",_Text,_IngressCardinal,_EgressCardinal,_DistanceForSmoke,name _Player,_Text,_Altitude]] remoteExec ["OKS_fnc_Chat",0];
 
 
 	waitUntil {
@@ -239,7 +239,7 @@ For "_i" from 0 to (count _CurrentArrayOfTargets - 1) do {
 
 	sleep 5;
 
-	["HQ","side",format["%2 - Target %1: Red smoke & laser on the target!",_Count,name _Player]] remoteExec ["OKS_Chat",0];
+	["HQ","side",format["%2 - Target %1: Red smoke & laser on the target!",_Count,name _Player]] remoteExec ["OKS_fnc_Chat",0];
 	_Vehicle = vehicle _Player;
 
 	if !(isNull _EnemyVehicle) then {

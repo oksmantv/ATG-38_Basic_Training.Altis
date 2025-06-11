@@ -19,7 +19,7 @@ MedicalAssessmentActions = compile preprocessFileLineNumbers "Training\Medical\M
 [MedicalData_7,PatientSpawn_7] execVM "Training\Medical\MedicalActions.sqf";
 [MedicalData_8,PatientSpawn_8] execVM "Training\Medical\MedicalActions.sqf";
 [MedicalData_9,PatientSpawn_9] execVM "Training\Medical\MedicalActions.sqf";
-[MedicalData_10,PatientSpawn_10] execVM "Training\Medical\MedicalActions.sqf";
+//[MedicalData_10,PatientSpawn_10] execVM "Training\Medical\MedicalActions.sqf";
 
 // Team Exercise
 [MedicalData_11,PatientSpawn_11] execVM "Training\Medical\MedicalActions.sqf";
@@ -31,6 +31,9 @@ MedicalAssessmentActions = compile preprocessFileLineNumbers "Training\Medical\M
 
 // Assessment
 [TerminalAssess_1, SpawnAssess_1] execVM "Training\Medical\MedicalAssessmentActions.sqf";
+[TerminalAssess_2, SpawnAssess_2] execVM "Training\Medical\MedicalAssessmentActions.sqf";
+[TerminalAssess_3, SpawnAssess_3] execVM "Training\Medical\MedicalAssessmentActions.sqf";
+[TerminalAssess_4, SpawnAssess_4] execVM "Training\Medical\MedicalAssessmentActions.sqf";
 
 // Qualification Course
 [MedicalQualificationData_1,MedicalQualificationSpawn_1,Barrier_1] execVM "Training\Medical\MedicalQualificationActions.sqf";

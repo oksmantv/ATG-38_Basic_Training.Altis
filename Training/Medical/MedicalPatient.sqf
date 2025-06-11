@@ -2,7 +2,7 @@ params ["_Terminal","_SpawnPos","_Severe",["_ShouldBleed",true,[true]],["_isAsse
 private ["_TierLevel"];
 
 switch (toLower _Severe) do {
-    case "easy": {
+    case "some": {
         _TierLevel = 3;
     };
     case "lot": {
@@ -29,12 +29,14 @@ switch (toLower _Severe) do {
             sleep 3.5;
         };
     };
-    { if(!isPlayer _X) then {deleteVehicle _X}} foreach (_SpawnPos nearEntities 5);
-    { if(_X distance _SpawnPos < 5) then {deleteVehicle _x }} forEach allDeadMen;
-    sleep 0.5;
+    _previousUnit = _Terminal getVariable ["AttachedUnit",objNull];
+    deleteVehicle _previousUnit;
     _Group = createGroup west;
+    _Group setVariable ["GW_Gear_BlackList",true,true];
     _Group setVariable ["acex_headless_blacklist",true,true];
-    _Unit = _Group createUnit ["B_Soldier_F",[15385.4,17445.8,0], [], 15, "CAN_COLLIDE"];
+    _Unit = _Group createUnit ["B_Soldier_F",_SpawnPos, [], -1, "CAN_COLLIDE"];
+    _Unit setVariable ["GW_Gear_BlackList",true,true];
+    _Terminal setVariable ["AttachedUnit",_Unit,true];
 
     For "_i" from 0 to 30 do {
         _Unit addItemToUniform "ACE_ElasticBandage"
@@ -53,10 +55,6 @@ switch (toLower _Severe) do {
             sleep 3;
         };
     };
-    _Unit setPosATL (getPosATL _SpawnPos);
-    [_Unit,false] remoteExec ["hideObjectGlobal",2];
-    waitUntil{PrimaryWeapon _Unit != ""};
-    removeAllWeapons _Unit;
     
     if !(isNil "MED_MASS_READY") then {
         waitUntil {sleep 0.1; MED_MASS_READY};
@@ -68,19 +66,22 @@ switch (toLower _Severe) do {
         };
     };
 
+    sleep 0.5;
+    [_Unit, "unarmed"] call GW_Gear_Fnc_Handler;
+
     if(_IsAssessment) then {
         systemChat str ["IsAssessment",_TierLevel];
 
-        [_Unit,_TierLevel] spawn MedicalAssessment;
+        [_Unit,_TierLevel] remoteExec ["MedicalAssessment",0];
 
         waitUntil {sleep 1; _Unit getVariable ["AssessmentComplete",false] || _Unit getVariable ["AssessmentFailed",false]};
         
         _DiagnosedTier = _Unit getVariable ["DiagnosedTier",0];
         if(_Unit getVariable ["AssessmentComplete",false]) then {
-            ["HQ","side",format["%1 completed assessment of a Tier %2 casualty.",name _Player,_TierLevel]] remoteExec ["OKS_Chat",0];
+            ["HQ","side",format["%1 completed assessment of a Tier %2 casualty.",name _Player,_TierLevel]] remoteExec ["OKS_fnc_Chat",0];
             deleteVehicle _Unit;
         } else {
-            ["HQ","side",format["%1 failed assessment of a Tier %2 casualty, player selected Tier %3",name _Player,_TierLevel,_DiagnosedTier]] remoteExec ["OKS_Chat",0];
+            ["HQ","side",format["%1 failed assessment of a Tier %2 casualty, player selected Tier %3",name _Player,_TierLevel,_DiagnosedTier]] remoteExec ["OKS_fnc_Chat",0];
             deleteVehicle _Unit;
         };
     };

@@ -12,8 +12,6 @@ OKS_Marksman_Qualification_Function = compile preprocessFileLineNumbers "Trainin
 OKS_Marksman_Qualification_Target = compile preprocessFileLineNumbers "Training\MarksmanQualification\OKS_Marksman_Qualification_Target.sqf";
 OKS_Marksman_Qualification_WeaponSelect = compile preprocessFileLineNumbers "Training\MarksmanQualification\OKS_Marksman_Qualification_WeaponSelect.sqf";
 
-//Dense_CQB_Garrison = compile preprocessFileLineNumbers "Training\Dense_CQB_Garrison.sqf";
-//OKS_SpawnEnemyVehicle = compile preprocessFileLineNumbers "Scripts\OKS_SpawnEnemyVehicle.sqf";
 MGSpawner = compile preprocessFileLineNumbers "Training\MGSpawner.sqf";
 LauncherGear = compile preprocessFileLineNumbers "Training\LauncherGear.sqf";
 AA_Spawner = compile preprocessFileLineNumbers "Training\AA_Spawner.sqf";
@@ -26,39 +24,10 @@ LiveRunCode = compile preprocessFileLineNumbers "Training\LiveRunCode.sqf";
 3DReportSpawner = compile preprocessFileLineNumbers "Training\3DReportSpawner.sqf";
 3DReportAction = compile preprocessFileLineNumbers "Training\3DReportAction.sqf";
 OKS_Peeling = compile preprocessFileLineNumbers "Training\OKS_Peeling.sqf";
-//Attack_DoMove = compile preprocessFileLineNumbers "Training\Attack_DoMove.sqf";
 MedicalQualificationPatients = compile preprocessFileLineNumbers "Training\Medical\MedicalQualificationPatients.sqf";
-// AmbushActivate = compile preprocessFileLineNumbers "Training\AmbushActivate.sqf";
-// AmbushAction = compile preprocessFileLineNumbers "Training\AmbushAction.sqf";
-// ConvoySpawn = compile preprocessFileLineNumbers "Scripts\OKS_Spawn\OKS_Convoy_Spawn.sqf";
 
 
-// AT Range
-OKS_AT_Spawn_Active = false; sleep 1;
-[AT_Range_PC,"<t color='#2acb1f'>Activate Range</t>","OKS_AT_Spawn_Active",false,false,true,"OKS_AT_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
-[AT_Range_PC,"<t color='#2acb1f'>Deactivate Range</t>","OKS_AT_Spawn_Active",false,false,false,"OKS_AT_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
 
-// AA Range
-OKS_AA_Spawn_Active = false; sleep 1;
-[AT_Range_PC,"<t color='#1A98FD'>Activate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,true,"OKS_AA_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1; 
-[AT_Range_PC,"<t color='#1A98FD'>Deactivate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,false,"OKS_AA_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf";
-
-
-// // Ambush
-// AmbushAction_0 setVariable ["AMBUSH_TEXT","Ambush 0",true];
-// [AmbushAction_0,ConvoySpawn_0,ConvoyWP_0,ConvoyEnd_0,EAST] execVM "Training\AmbushAction.sqf";
-
-// AmbushAction_1 setVariable ["AMBUSH_TEXT","Ambush 1",true];
-// [AmbushAction_1,ConvoySpawn_1,ConvoyWP_1,ConvoyEnd_1,EAST] execVM "Training\AmbushAction.sqf";
-
-// AmbushAction_2 setVariable ["AMBUSH_TEXT","Ambush 2",true];
-// [AmbushAction_2,ConvoySpawn_2,ConvoyWP_2,ConvoyEnd_2,EAST] execVM "Training\AmbushAction.sqf";
-
-// AmbushAction_3 setVariable ["AMBUSH_TEXT","Ambush 3",true];
-// [AmbushAction_3,ConvoySpawn_3,ConvoyWP_3,ConvoyEnd_3,EAST] execVM "Training\AmbushAction.sqf";
-
-// AmbushAction_4 setVariable ["AMBUSH_TEXT","Ambush 4",true];
-// [AmbushAction_4,ConvoySpawn_4,ConvoyWP_4,ConvoyEnd_4,EAST] execVM "Training\AmbushAction.sqf";
 
 // Global disable for Pop-Up Targets.
 boundPopup = [];
@@ -215,6 +184,17 @@ OKS_CourseReset = {
 		"",
 		""
 	];
+
+// AT Range
+OKS_AT_Spawn_Active = false; sleep 1;
+[AT_Range_PC,"<t color='#2acb1f'>Activate Range</t>","OKS_AT_Spawn_Active",false,false,true,"OKS_AT_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
+[AT_Range_PC,"<t color='#2acb1f'>Deactivate Range</t>","OKS_AT_Spawn_Active",false,false,false,"OKS_AT_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1;
+
+// AA Range
+OKS_AA_Spawn_Active = false; sleep 1;
+[AT_Range_PC,"<t color='#1A98FD'>Activate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,true,"OKS_AA_Spawn_Active == false"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf"; sleep 1; 
+[AT_Range_PC,"<t color='#1A98FD'>Deactivate Range (Air)</t>","OKS_AA_Spawn_Active",false,false,false,"OKS_AA_Spawn_Active == true"] execVM "Scripts\OKS_Task\NEKY_AddAction.sqf";
+
 
 sleep 20;
 

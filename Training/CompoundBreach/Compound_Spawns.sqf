@@ -153,7 +153,7 @@ _Buildings = (nearestObjects [_Trigger, ["House"], 100]) select {_X inArea _Trig
 {_Building = _X; {(_Building) animate [_X, 1]} foreach (animationNames _Building)} foreach _Buildings;
 _PlayerGroups = (allGroups select {isPlayer (leader _X) && (leader _X) inArea _Trigger});
 {
-	[(leader _X),"side",format["Compound %1: Exercise complete.", _case]] remoteExec ["OKS_Chat",0];
+	[(leader _X),"side",format["Compound %1: Exercise complete.", _case]] remoteExec ["OKS_fnc_Chat",0];
 } forEach _PlayerGroups;
 playSound3D [MISSION_ROOT + "Training\MarksmanQualification\oks_buzzer.ogg", _Trigger, false, _Trigger, 5, 1, 50]; sleep 1;
 playSound3D [MISSION_ROOT + "evacuate_area.wav", _Trigger, false, _Trigger, 5, 1, 50];

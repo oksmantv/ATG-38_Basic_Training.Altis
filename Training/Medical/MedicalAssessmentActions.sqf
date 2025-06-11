@@ -7,7 +7,7 @@ _ActionBox addAction ["<t color='#ce2ef8'>Initiate Casualty Assessment</t>", {
 	[
 		((_this select 3) select 0),
 		((_this select 3) select 1),
-		selectRandom["easy","dead","lot","large","fatal"],
+		selectRandom["some","dead","lot","large","fatal"],
 		false,
 		true,
 		(_this select 1)

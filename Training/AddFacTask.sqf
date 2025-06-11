@@ -16,7 +16,7 @@ _TaskHistory = _TaskHistory + 1;
 _Group setVariable ["TaskCount",_TaskHistory,true];
 
 _MainTask = format ["FacTask_Main_%1_%2",_Player,_TaskHistory];
-["hq","side",format["%1 started FAC tasks - %2",groupId (group _Player),_NameOfPlayers]] remoteExec ["OKS_Chat",0];
+["hq","side",format["%1 started FAC tasks - %2",groupId (group _Player),_NameOfPlayers]] remoteExec ["OKS_fnc_Chat",0];
 _Group setVariable ["ReadyForNextTask",true,true];
 _Group setVariable ["OKS_FAC_Task_Active",true,true];
 [_Group, _MainTask, ["This task will continue to loop until you return to base using the action available to the person initiating the tasks. When you arrive at the HLS, call in the helicopter and once the helicopter has landed, the task will be complete and you will have access to another action called 'Ready for next HLS'. Use it to teleport to the next task.", ["FAC Duties %2: %1",(groupId (group _Player)),_TaskHistory], "MarkerName"], objNull,"CREATED",-1, false,"map", false] call BIS_fnc_taskCreate;

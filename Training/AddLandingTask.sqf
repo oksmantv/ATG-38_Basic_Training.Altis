@@ -21,7 +21,7 @@ _Timer = {
 	};
 	sleep 2;
 	if(Alive vehicle _Player AND vehicle _Player isKindOf "Helicopter" AND canMove vehicle _Player) then {
-		["HQ","side",format["%2 - HLS %1 - Time from Smoke to landing: %3 seconds",_Count,name _Player,_Time]] remoteExec ["OKS_Chat",0];
+		["HQ","side",format["%2 - HLS %1 - Time from Smoke to landing: %3 seconds",_Count,name _Player,_Time]] remoteExec ["OKS_fnc_Chat",0];
 	};
 };
 
@@ -114,7 +114,7 @@ For "_i" from 0 to (count _CurrentArrayOfHLS - 1) do {
 	_SmokeArray params ["_Colour","_SmokeClass"];
 
 	[_Player, [_Task,format ["LandingTask_Main_%1",_Player]], [format["A friendly force has requested that you land at the <font color='#84e4ff'><marker name = '%1'>HLS</marker></font color>. Ingress %2, Egress %3.",_marker,_IngressCardinal,_EgressCardinal], format["Landing Zone %1",_Count], "Landing"], objNull,"ASSIGNED",-1, true,"takeoff", false] call BIS_fnc_taskCreate;
-	["HQ","side",format["%5 - Requesting Landing at HLS %1. Ingress %2. Egress %3. Purple Panels. %6 smoke on HLS when within %4 meters, out!",_Count,_IngressCardinal,_EgressCardinal,_DistanceForSmoke,name _Player,_Colour]] remoteExec ["OKS_Chat",0];
+	["HQ","side",format["%5 - Requesting Landing at HLS %1. Ingress %2. Egress %3. Purple Panels. %6 smoke on HLS when within %4 meters, out!",_Count,_IngressCardinal,_EgressCardinal,_DistanceForSmoke,name _Player,_Colour]] remoteExec ["OKS_fnc_Chat",0];
 
 	waitUntil { 
 		sleep 1;
@@ -149,7 +149,7 @@ For "_i" from 0 to (count _CurrentArrayOfHLS - 1) do {
 	_Vehicle = vehicle _Player;
 	[_Player,_randomHLS,_Count] spawn _Timer;
 	[_randomHLS,_Player,_SmokeClass] spawn _CreateSmokeOnHLS;
-	["HQ","side",format["HLS %1 - %2: %3 smoke out on the HLS!",_Count,name _Player,_Colour]] remoteExec ["OKS_Chat",0];
+	["HQ","side",format["HLS %1 - %2: %3 smoke out on the HLS!",_Count,name _Player,_Colour]] remoteExec ["OKS_fnc_Chat",0];
 	
 	waitUntil {
 		sleep 0.5;

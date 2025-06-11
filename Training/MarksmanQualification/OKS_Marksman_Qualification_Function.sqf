@@ -43,7 +43,7 @@ _TargetAllArray = _Terminal getVariable ["OKS_Targets_All_Array",[]];
 
 // Notify Player
 
-["hq","side",format["%1 have started marksman course %2 for %3.",name _Player,_Index,_SelectedWeapon]] remoteExec ["OKS_Chat",0]; sleep 2;
+["hq","side",format["%1 have started marksman course %2 for %3.",name _Player,_Index,_SelectedWeapon]] remoteExec ["OKS_fnc_Chat",0]; sleep 2;
 format ["You have 2 Magazines, 60 rounds and you will receive %1 targets.",count _TargetOrder] remoteExec ["systemChat",_Player]; sleep 2;
 format ["Rank 1: 35 - Rank 2: 45 - Rank 3: 55"] remoteExec ["systemChat",_Player]; sleep 2;
 
@@ -162,4 +162,4 @@ if(["invalid", _SelectedWeapon] call BIS_fnc_inString) then {
 
 _Terminal setVariable ['OKS_Range_Active',false,true];
 "OKS_Buzzer" remoteExec ["PlaySound",_Player];
-["hq","side",format["%1 scored %2 out of %3 and %4.",name _Player,_PlayerScore,(count _TargetOrder),_ResultText]] remoteExec ["OKS_Chat",0];
+["hq","side",format["%1 scored %2 out of %3 and %4.",name _Player,_PlayerScore,(count _TargetOrder),_ResultText]] remoteExec ["OKS_fnc_Chat",0];

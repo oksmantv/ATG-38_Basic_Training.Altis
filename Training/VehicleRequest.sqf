@@ -55,7 +55,7 @@ _C2 = if (_Kind != "") then { Format [" && (getText (_x >> 'VehicleClass') == '%
 _Cond = if (_C2 == "") then { _C1 } else { (_C1 + _C2) };
 _Array = _Cond ConfigClasses (ConfigFile >> "CfgVehicles");
 _Array = _Array Apply { ConfigName _x };
-_Array Sort True;
+_Array = [_Array, [], {getText (configFile >> "CfgVehicles" >> _X >> "DisplayName")}, "ASCEND"] call BIS_fnc_sortBy;
 
 // AddActions
 _Filter = [];	// To avoid having each scheme of same vehicles appear.

@@ -1,6 +1,6 @@
 params ["_object","_spawn","_barrier"];
 
-_object addAction ["<t color='#FF0000'>--Medical Qualification--</t>", {}];
+_object addAction ["<t color='#FF0000'>--Medical Qualification--</t>", {},[],2,true,true,"","true",5];
 _object addAction ["<t color='#04F51F'>Initiate Qualification (Level 1)</t>", {
 		[(_this select 0),(_this select 1), (_this select 3 select 0),(_this select 3 select 1),1] remoteExec ["MedicalQualificationPatients",2]
 	},
@@ -10,7 +10,7 @@ _object addAction ["<t color='#04F51F'>Initiate Qualification (Level 1)</t>", {
 	true,
 	"",
 	"true", // _target, _this, _originalTarget
-	1.5,
+	5,
 	false,
 	"",
 	""
@@ -24,7 +24,7 @@ _object addAction ["<t color='#04F51F'>Initiate Qualification (Level 2)</t>", {
 	true,
 	"",
 	"true", // _target, _this, _originalTarget
-	1.5,
+	5,
 	false,
 	"",
 	""
@@ -38,7 +38,7 @@ _object addAction ["<t color='#04F51F'>Initiate Qualification (Level 3)</t>", {
 	true,
 	"",
 	"true", // _target, _this, _originalTarget
-	1.5,
+	5,
 	false,
 	"",
 	""

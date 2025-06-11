@@ -7,23 +7,33 @@ private ["_TimeLimit"];
         playSound3D [MISSION_ROOT + "activated.wav", _Terminal];
         sleep 3.5;
     };
-    { if(!isPlayer _X) then {deleteVehicle _X}} foreach (_SpawnPos nearEntities 5);
-    { if(_X distance _SpawnPos < 5) then {deleteVehicle _x }} forEach allDeadMen;
+    _previousUnits = _Terminal getVariable ["AttachedUnits",[]];
+    {deleteVehicle _X} foreach _previousUnits;
     sleep 0.5;
     _Group = createGroup west;
+	_Group setVariable ["GW_Gear_BlackList",true,true];
+    _Group setVariable ["acex_headless_blacklist",true,true];
 
 	if(_Level > 0) then {
-   		_Unit1 = _Group createUnit ["B_Soldier_F",[15385.4,17445.8,0], [], 15, "NONE"];
+   		_Unit1 = _Group createUnit ["B_Soldier_F",_SpawnPos, [], 3, "CAN_COLLIDE"];
+		_Unit1 setDir (Random 360);
+		_Unit1 setVariable ["GW_Gear_BlackList",true,true];
 		_TimeLimit = 120;
 	};
 	if(_Level > 1) then {
-   		_Unit2 = _Group createUnit ["B_Soldier_F",[15385.4,17445.8,0], [], 15, "NONE"];
+   		_Unit2 = _Group createUnit ["B_Soldier_F",_SpawnPos, [], 3, "CAN_COLLIDE"];
+		_Unit2 setDir (Random 360);
+	    _Unit2 setVariable ["GW_Gear_BlackList",true,true];
 		_TimeLimit = 180;
 	};
 	if(_Level > 2) then {
-   		_Unit3 = _Group createUnit ["B_Soldier_F",[15385.4,17445.8,0], [], 15, "NONE"];
+   		_Unit3 = _Group createUnit ["B_Soldier_F",_SpawnPos, [], 3, "CAN_COLLIDE"];
+		_Unit3 setDir (Random 360);
+	    _Unit3 setVariable ["GW_Gear_BlackList",true,true];
 		_TimeLimit = 360;
 	};		
+
+	_Terminal setVariable ["AttachedUnits",units _Group, true];
 
 	// GOL PATIENT SETUP
 
@@ -35,7 +45,7 @@ private ["_TimeLimit"];
 			_Unit addItemToUniform "ACE_ElasticBandage"
 		};
 
-		[_Unit,true] remoteExec ["hideObjectGlobal",2];
+		//[_Unit,true] remoteExec ["hideObjectGlobal",2];
 		[_Unit,"CARELESS"] remoteExec ["setBehaviour",0];
 		[_Unit,"MOVE"]remoteExec ["disableAI",0];
 		_Unit remoteExec ["DoStop",0];
@@ -44,19 +54,13 @@ private ["_TimeLimit"];
 			_Unit setDir (_Unit getDir _Terminal);
 		} else {
 			_Unit setDir (random 360);
-		};
-
-		waitUntil{PrimaryWeapon _Unit != ""};
-		removeAllWeapons _Unit;
+		};	
 		[_Unit,"qualification"] execVM "Training\Medical\MedicalDamage.sqf";
 		waitUntil{_Unit getVariable ["GOL_Qualification_Ready",false]};
-		_Pos = (getPosATL _SpawnPos) getPos [2,_Direction];
-		_Unit setPosATL _Pos;
+		[_Unit, "unarmed"] call GW_Gear_Fnc_Handler
 	};
 
 	// END GOL PATIENT SETUP
-
-
 
 	private _Dir = (random 360);
 	{
@@ -68,6 +72,7 @@ private ["_TimeLimit"];
         [_Terminal,0] call BIS_fnc_dataTerminalAnimate;
     };
 	sleep 3;
+	//{} foreach units _Group;
 	waitUntil { {_X getVariable ["GOL_Qualification_Ready",false]} count units _Group == count units _Group};
 	
 	// Timer
@@ -109,21 +114,21 @@ private ["_TimeLimit"];
 	} forEach units _Group;
 	[_Barrier,true] remoteExec ["hideObjectGlobal",2];
 	playSound3D [MISSION_ROOT + "tier1.wav", _Terminal];
-	["HQ","side",format["%2: Started Qualification Level %3 - Time Limit: %1",_TimeLimit,name _Qualifier,_Level]] remoteExec ["OKS_Chat",0];
+	["HQ","side",format["%2: Started Qualification Level %3 - Time Limit: %1",_TimeLimit,name _Qualifier,_Level]] remoteExec ["OKS_fnc_Chat",0];
 	waitUntil{sleep 0.1; {_X getVariable ["GOL_Qualification_Complete",false]} count units _Group == count units _Group || {!Alive _X} count units _Group > 0};
 	if({!Alive _X} count units _Group > 0) then {
-		["HQ","side",format["%2: Failed Qualification - Casualty Died",(_Qualifier getVariable ["GOL_Qualification_Time",0]),name _Qualifier]] remoteExec ["OKS_Chat",0];
+		["HQ","side",format["%2: Failed Qualification - Casualty Died",(_Qualifier getVariable ["GOL_Qualification_Time",0]),name _Qualifier]] remoteExec ["OKS_fnc_Chat",0];
 		playSound3D [MISSION_ROOT + "failure.wav", _Terminal];
 	} else {
 		_Time = (_Qualifier getVariable ["GOL_Qualification_Time",0]);
 		if(_Time > _TimeLimit) then {
-			["HQ","side",format["%2: Failed Qualification by %1 seconds",(_Time - _TimeLimit),name _Qualifier]] remoteExec ["OKS_Chat",0];
+			["HQ","side",format["%2: Failed Qualification by %1 seconds",(_Time - _TimeLimit),name _Qualifier]] remoteExec ["OKS_fnc_Chat",0];
 			playSound3D [MISSION_ROOT + "failure.wav", _Terminal];
 		} else {
 			// if({(_X getVariable ["GOL_CPR_COMPLETED",0]) < 2} count units _Group == count units _Group) then {
-			// 	["HQ","side",format["%2: Failed Qualification in %1 seconds - Did not apply CPR at least 2 times per casualty",_Time,name _Qualifier]] remoteExec ["OKS_Chat",0];	
+			// 	["HQ","side",format["%2: Failed Qualification in %1 seconds - Did not apply CPR at least 2 times per casualty",_Time,name _Qualifier]] remoteExec ["OKS_fnc_Chat",0];	
 			// } else {
-				["HQ","side",format["%2: Succeeded Qualification (Level %3) in %1 seconds",_Time,name _Qualifier,_Level]] remoteExec ["OKS_Chat",0];
+				["HQ","side",format["%2: Succeeded Qualification (Level %3) in %1 seconds",_Time,name _Qualifier,_Level]] remoteExec ["OKS_fnc_Chat",0];
 				playSound3D [MISSION_ROOT + "victory.wav", _Terminal];
 			//}			
 		};		

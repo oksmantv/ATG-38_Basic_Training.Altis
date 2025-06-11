@@ -54,7 +54,7 @@ _Target addEventHandler ["Hit", {
 			"Not standing, rested or deployed. Hit does not count!" remoteExec ["SystemChat",_Shooter];
 		}
 	} else {
-		["hq","side",format["%2 interrupted %1's qualification run by shooting at his target.",name _DesignatedShooter,name _Shooter]] remoteExec ["OKS_Chat",0];
+		["hq","side",format["%2 interrupted %1's qualification run by shooting at his target.",name _DesignatedShooter,name _Shooter]] remoteExec ["OKS_fnc_Chat",0];
 		[_Shooter, true, _Shooter] remoteExec ["ACE_captives_fnc_setHandcuffed",0];
 		
 		_Target spawn {		
