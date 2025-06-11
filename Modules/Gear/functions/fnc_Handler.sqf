@@ -184,7 +184,7 @@ if (_isMan) then {
 		["", "", "", "", "", ""] call _addLinkedItems;
 	} else {
 		if ((call EFUNC(Common,isNight)) && _allowedNightStuff) then {
-			_nvg = "NVGoggles_Opfor";
+			_nvg = "ACE_NVG_Gen4_Black";
 		};
 
 		if !(_isPlayer || (_unit in switchableUnits)) then {
@@ -342,10 +342,10 @@ if (_isMan) then {
 				[_unit, "GOL_Packed_GMG", 6] call _fnc_AddObjectsCargo;
 				[_unit, "GOL_Packed_Mortar", 6] call _fnc_AddObjectsCargo;
 				[_unit, "GOL_Packed_AT", 6] call _fnc_AddObjectsCargo;
-				[_unit, "GOL_Packed_Drone_AP", 30] call _fnc_AddObjectsCargo;
-				[_unit, "GOL_Packed_Drone_AT", 30] call _fnc_AddObjectsCargo;				
-				[_unit, "GOL_Packed_Drone_Recon", 15] call _fnc_AddObjectsCargo;				
-				[_unit, "GOL_Packed_Drone_Supply", 10] call _fnc_AddObjectsCargo;				
+				[_unit, "GOL_Packed_Drone_AP", 10] call _fnc_AddObjectsCargo;
+				[_unit, "GOL_Packed_Drone_AT", 10] call _fnc_AddObjectsCargo;				
+				[_unit, "GOL_Packed_Drone_Recon", 4] call _fnc_AddObjectsCargo;				
+				[_unit, "GOL_Packed_Drone_Supply", 4] call _fnc_AddObjectsCargo;				
 				[_unit, _MAT_mag_HE, 10] call _fnc_AddObjectsCargo;
 				[_unit, (_LAT select 0), 30] call _fnc_AddObjectsCargo;
 				if (true) then {
@@ -520,9 +520,19 @@ if (_isMan) then {
 
 					_compatibleItems append _whiteList;
 
-					[_unit, _compatibleItems] call ace_arsenal_fnc_initBox;			
-					[GOL_Arsenal_LMG, _compatibleItemsLMG] call ace_arsenal_fnc_initBox;
-					[GOL_Arsenal_GL, _compatibleItemsGL] call ace_arsenal_fnc_initBox;
+					[_unit, _compatibleItems] call ace_arsenal_fnc_initBox;
+
+					_ArsenalGL = createVehicle ["Land_PlasticCase_01_small_F", [1000,1000,0], [], 0, "NONE"];
+					_ArsenalLMG = createVehicle ["Land_PlasticCase_01_small_F", [1000,1000,0], [], 0, "NONE"];
+					_ArsenalGL hideObjectGlobal true;
+					_ArsenalLMG hideObjectGlobal true;
+					_ArsenalGL setVehicleVarName format["GOL_ArsenalGL_%1",_side];
+					_ArsenalLMG setVehicleVarName format["GOL_ArsenalLMG_%1",_side];
+
+					[_ArsenalGL, _compatibleItemsGL] call ace_arsenal_fnc_initBox;
+					[_ArsenalLMG, _compatibleItemsLMG] call ace_arsenal_fnc_initBox;
+					missionNamespace setVariable [format["GOL_ArsenalGL_%1",_realSide], _ArsenalGL, true];
+					missionNamespace setVariable [format["GOL_ArsenalLMG_%1",_realSide], _ArsenalLMG, true];
 				};
 				if (true) then {
 					[_unit, "TFAR_pnr1000a", 10] call _fnc_AddObjectsCargo;
