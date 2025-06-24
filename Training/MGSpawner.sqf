@@ -3,18 +3,7 @@ playSound3D [MISSION_ROOT + "activated.wav", _Object];
 // [[Arrow_1,Arrow_2,Arrow_3]] execVM "3DReportSpawner.sqf";
 
 _Units = [
-	"O_Soldier_A_F",
-	"O_Soldier_AR_F",
-	"O_Soldier_AR_F",
-	"O_medic_F",
-	"O_medic_F",
-	"O_Soldier_GL_F",
-	"O_HeavyGunner_F",
-	"O_soldier_M_F",
-	"O_Soldier_F",
-	"O_Soldier_F",
-	"O_Soldier_F",
-	"O_Soldier_LAT_F"
+	"O_soldier_M_F"
 ];
 
 _Statics = [
@@ -67,10 +56,12 @@ For "_i" from 0 to (_Count - 1) do {
 		_Unit doWatch _Target;
 		_Unit doTarget _Target;
 		_Unit reveal [_Target,4];
+		_Unit setSkill ["aimingAccuracy",1];
+		_Unit setSkill ["aimingShake",1];
 		_Unit spawn {
 			while {alive _this} do {
 				_this fire PrimaryWeapon _this;
-				sleep 0.4;
+				sleep 0.01;
 			}
 		};
 	};

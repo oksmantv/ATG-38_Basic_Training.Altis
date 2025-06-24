@@ -104,9 +104,9 @@ _pdw_mag = "rhs_mag_9x19mm_7n31_44";
 
 _silencer = "";
 _pointer = "";
-_sight = "rhs_acc_pso1m21";
+_sight = "JCA_optic_CRBS_black";
 _bipod = "";
 
-_rifleMarksman = ["rhs_weap_svdp_wd", _silencer, _pointer, _sight, _bipod];
-_rifleMarksman_mag = "rhs_10Rnd_762x54mmR_7N1";
-_rifleMarksman_mag_tr = "rhs_10Rnd_762x54mmR_7N14";
+_rifleMarksman = ["UK3CB_MG3_KWS_B", _silencer, _pointer, _sight, _bipod];
+_rifleMarksman_mag = "UK3CB_MG3_250rnd_762x51_GT";
+_rifleMarksman_mag_tr = "UK3CB_MG3_250rnd_762x51_GT";

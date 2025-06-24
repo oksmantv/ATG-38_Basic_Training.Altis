@@ -16,6 +16,7 @@ MGSpawner = compile preprocessFileLineNumbers "Training\MGSpawner.sqf";
 LauncherGear = compile preprocessFileLineNumbers "Training\LauncherGear.sqf";
 AA_Spawner = compile preprocessFileLineNumbers "Training\AA_Spawner.sqf";
 AT_Spawner = compile preprocessFileLineNumbers "Training\AT_Spawner.sqf";
+AT_Static_Spawner = compile preprocessFileLineNumbers "Training\AT_Static_Spawner.sqf";
 AI_Death = compile preprocessFileLineNumbers "Training\AI_Death.sqf";
 CQB_Garrison = compile preprocessFileLineNumbers "Training\CQB_Garrison.sqf";
 OKS_PlaySound = compile preprocessFileLineNumbers "Training\OKS_PlaySound.sqf";
@@ -208,9 +209,19 @@ sleep 20;
 ] spawn OKS_Peeling;
 
 if(isServer) then {
-	[ATSpawn_1,ATWP_1,ATEnd_1,east,[6,60]] spawn AT_Spawner;
-	[ATSpawn_2,ATWP_2,ATEnd_2,east,[6,60]] spawn AT_Spawner;
+	[ATSpawn_1,ATWP_1,ATEnd_1,east,[6,90]] spawn AT_Spawner;
+	[ATSpawn_2,ATWP_2,ATEnd_2,east,[6,90]] spawn AT_Spawner;
+	[ATSpawn_3,ATWP_3,ATEnd_3,east,[6,90]] spawn AT_Spawner;
 	[AirStart_1,AirEnd_1,east] spawn AA_Spawner;
 	[AirStart_2,AirEnd_2,east] spawn AA_Spawner;	
 	[AirStart_3,AirEnd_3,east] spawn AA_Spawner;
+
+	{
+		[_X,east,15] spawn AT_Static_Spawner;
+	} foreach [
+		static_1, static_10, static_11, static_12, static_13, static_14, static_15,
+		static_16, static_17, static_18, static_19, static_2, static_20, static_21,
+		static_22, static_23, static_24, static_25, static_26, static_3, static_4,
+		static_5, static_6, static_7, static_8, static_9
+	];
 };

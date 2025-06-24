@@ -1,11 +1,10 @@
-// [spawn_1,waypoint_1,end_1,east,[6, 25]]] spawn AT_Spawner;
-// [spawnpos_1,waypoint_1,end_1,east,[6, 30]]] execVM "AT_Spawner.sqf";
+// [spawn_1,east,[6, 25]] spawn AT_Static_Spawner;
+// [spawnpos_1,east,[6, 30]]] execVM "AT_Static_Spawner.sqf";
 
 
 if(!isServer) exitWith {};
 
-Params ["_Spawn","_Waypoint","_End","_Side","_VehicleArray"];
-_VehicleArray Params ["_SpeedMeterPerSecond","_DispersionInMeters"];
+Params ["_Spawn","_Side","_DispersionInMeters"];
 
 Private ["_crewClass","_Units","_Leader","_Vehicles","_DismountCode","_Classname"];
 Private _ConvoyArray = [];
@@ -97,9 +96,10 @@ while {true} do {
 
 	while {OKS_AT_Spawn_Active} do {
 		waitUntil {sleep 1; if(_Debug_Variable) then {systemChat "Waiting for clearance near _Spawn"}; (getPos _Spawn nearEntities ["LandVehicle", _DispersionInMeters]) isEqualTo []};
+		sleep 3;
 		if(_Debug_Variable) then {systemChat format ["Spawning Vehicle.."]};
 		_Classname = selectRandom _Vehicles;
-		_Vehicle = CreateVehicle [_Classname,getPos _Spawn];
+		_Vehicle = CreateVehicle [_Classname,getPos _Spawn, [], 0, "CAN_COLLIDE"];
 		_Vehicle setDir (getDir _Spawn);
 		_Vehicle setVehicleLock "LOCKED";
 
@@ -125,20 +125,16 @@ while {true} do {
 			_Driver = _Group CreateUnit [_crewClass, [0,0,0], [], 5, "NONE"];
 			_Driver setRank "PRIVATE";
 			_Driver moveinDriver _Vehicle;
+			_Driver disableAI "PATH";
 		};
-		_Vehicle forceSpeed _SpeedMeterPerSecond;
+		
 		_Group setBehaviour "CARELESS";
 		_Group setCombatMode "BLUE";
-		_WP = _Group addWaypoint [getPos _Waypoint,0];
-		_WP setWaypointType "MOVE";
-		
-		_EndWP = _Group addWaypoint [_End,1];
-		_EndWP setWaypointType "MOVE";
 
-		[_Vehicle,_Group,_End] spawn {
-			Params["_Vehicle","_Group","_End"];
-			waitUntil {sleep 1; !Alive _Vehicle || getDammage _Vehicle > 0.5 || !canMove _Vehicle || {!Alive _X || !([_X] call ace_common_fnc_isAwake)} count units _Group == count units _Group || _Vehicle distance2D (getPos _End) < 25};
-			sleep 3;
+		[_Vehicle,_Group] spawn {
+			Params["_Vehicle","_Group"];
+			waitUntil {sleep 1; !Alive _Vehicle || getDammage _Vehicle > 0.5 || !canMove _Vehicle || {!Alive _X || !([_X] call ace_common_fnc_isAwake)} count units _Group == count units _Group};
+			sleep 2;
 			{deleteVehicle _X} foreach units _Group; deleteVehicle _Vehicle;
 		};
 	};
