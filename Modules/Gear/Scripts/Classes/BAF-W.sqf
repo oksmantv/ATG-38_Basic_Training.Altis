@@ -14,7 +14,7 @@ if (true) then {
 	_backpackRadio = "acp_gol_GB_DPM95_B_RadioBag_01_GB_DPM95_F";
 };
 
-if (_role in ["ag","ammg","lr","ab"]) then {
+if (_role in ["ag","ammg","lr","ab","atab"]) then {
 	_backpack = "acp_gol_GB_DPM95_B_Carryall_GB_DPM95";
 };
 if (_role isEqualTo "crew") then {
@@ -23,7 +23,7 @@ if (_role isEqualTo "crew") then {
 };
 if (_role isEqualTo "p") then {
 	_helmet = "rhsusf_hgu56p_visor_black";
-	_uniform = "UK3CB_ADM_B_U_CombatUniform_01_WDL";
+	_uniform = "acp_gol_GB_DPM95_U_I_E_Uniform_sweater_GB_DPM95_01_F_insignia";
 	_vest = "acp_gol_GB_DPM95_V_PlateCarrier1_GB_DPM95";
 };
 if (_role isEqualTo "uav") then {
@@ -84,9 +84,9 @@ _pdw_mag_tr = "UK3CB_MP5_30Rnd_9x19_Magazine_RT";
 
 _silencer = "";
 _pointer = "";
-_sight = "optic_LRPS";
+_sight = "rhsusf_acc_ACOG_RMR";
 _bipod = "";
 
-_rifleMarksman = ["UK3CB_BAF_L115A3", _silencer, _pointer, _sight, _bipod];
-_rifleMarksman_mag = "UK3CB_BAF_338_5Rnd";
-_rifleMarksman_mag_tr = "UK3CB_BAF_338_5Rnd_Tracer";
+_rifleMarksman = ["UK3CB_BAF_L129A1", _silencer, _pointer, _sight, _bipod];
+_rifleMarksman_mag = "UK3CB_BAF_762_L42A1_20Rnd_T";
+_rifleMarksman_mag_tr = "UK3CB_BAF_762_L42A1_20Rnd_T";

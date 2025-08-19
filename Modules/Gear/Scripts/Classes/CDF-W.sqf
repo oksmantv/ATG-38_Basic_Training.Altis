@@ -28,7 +28,7 @@ if (true) then {
 	_backpackRadio = "UK3CB_B_B_Alice_Radio_Backpack";
 };
 
-if(_role in ["ag","ammg"]) then {
+if(_role in ["ag","atab","ammg"]) then {
 	_backpack = "UK3CB_B_Alice_Bedroll_K";
 };
 if (_role isEqualTo "p") then {
@@ -103,5 +103,5 @@ _sight = "rhs_acc_pso1m21";
 _bipod = "";
 
 _rifleMarksman = ["rhs_weap_svds", _silencer, _pointer, _sight, _bipod];
-_rifleMarksman_mag = "rhs_10Rnd_762x54mmR_7N1";
-_rifleMarksman_mag_tr = "rhs_10Rnd_762x54mmR_7N14";
+_rifleMarksman_mag = "UK3CB_SVD_10rnd_762x54_RT";
+_rifleMarksman_mag_tr = "UK3CB_SVD_10rnd_762x54_RT";

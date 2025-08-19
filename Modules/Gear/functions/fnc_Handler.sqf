@@ -115,7 +115,8 @@ if (_isMan) then {
 		case "crew": { _DisplayName = "Vehicle Crew"; _roleArray pushBack _DisplayName};
 		case "dragon": { _DisplayName = "Dragon"; _roleArray pushBack _DisplayName};
 		case "lr": { _DisplayName = "Light Rifleman"; _roleArray pushBack _DisplayName};
-		case "ab": { _DisplayName = "Ammo Bearer"; _roleArray pushBack _DisplayName};
+		case "ab": { _DisplayName = "AR Ammo Bearer"; _roleArray pushBack _DisplayName};
+		case "atab": { _DisplayName = "AT Ammo Bearer"; _roleArray pushBack _DisplayName};
 		case "aa": { _DisplayName = "Anti-Air"; _roleArray pushBack _DisplayName};
 		case "ahat": { _DisplayName = "Asst. Heavy AT"; _roleArray pushBack _DisplayName};
 		case "hat": { _DisplayName = "Heavy AT"; _roleArray pushBack _DisplayName};
@@ -124,6 +125,7 @@ if (_isMan) then {
 		case "p": { _DisplayName = "Chopper Pilot"; _roleArray pushBack _DisplayName};
 		case "pj": { _DisplayName = "Para-Rescueman"; _roleArray pushBack _DisplayName};
 		case "jetp": { _DisplayName = "Jet Pilot"; _roleArray pushBack _DisplayName};
+		case "lightdragon": { _DisplayName = "Mortar Operator"; _roleArray pushBack _DisplayName};
 		case "marksman": { _DisplayName = "Marksman"; _roleArray pushBack _DisplayName};		
 	};
 	_unit setVariable ["GOL_SelectedRole",_roleArray,true];
@@ -204,9 +206,18 @@ if (_isMan) then {
 
 	if !(_errorCode) then {
 		_unit setUnitLoadout _loadout;
+		(_unit) setVariable ['GW_Gear_appliedGear', true, true];
 
 		if (_isPlayer && _useFactionRadio && _roleUseRadio) then {
-
+			if(!isNIl "zade_boc_fnc_removeChestpack" && !isNil "zade_boc_fnc_chestpack") then {
+				_chestBackpack = [_unit] call zade_boc_fnc_chestpack;
+				if(_chestBackpack != "") then {
+					[_unit] call zade_boc_fnc_removeChestpack;
+				};
+			};
+			if(_role == "lightdragon") then {
+				_unit addWeapon "UK3CB_BAF_M6";
+			};
 			if (isClass ((missionConfigFile >> "GW_Modules" >> "Radios"))) then {
 				[{
 					_this call EFUNC(Radios,add);
@@ -397,9 +408,9 @@ if (_isMan) then {
 
 					if(_OpticsAllowed isEqualTo true) then {
 						if(_MagnifiedOpticsAllowed isEqualTo true) then {
-							_opticValues = ["1.0x"]
-						} else {
 							_opticValues = ["1.0x","1.0x-2.0x"]
+						} else {
+							_opticValues = ["1.0x"]
 						};
 
 						{
@@ -553,13 +564,9 @@ if (_isMan) then {
 				[_unit, _smokegrenadeB, 2] call _fnc_AddObjectsCargo;
 				[_unit, _bandage, 15] call _fnc_AddObjectsCargo;
 				[_unit, _morph, 5] call _fnc_AddObjectsCargo;
-				if (true) then {
-					[_unit, _epi, 5] call _fnc_AddObjectsCargo;
-					[_unit, "ACE_salineIV", 5] call _fnc_AddObjectsCargo;
-					[_unit, _flashBang, 2] call _fnc_AddObjectsCargo;
-					[_unit, true, [0, 1.5, 0], 0, true] call ace_dragging_fnc_setDraggable;
-					[_unit, true, [0,1,1], 0, true] call ace_dragging_fnc_setCarryable;
-				};
+				[_unit, _epi, 5] call _fnc_AddObjectsCargo;
+				[_unit, _saline, 5] call _fnc_AddObjectsCargo;
+				[_unit, _flashBang, 2] call _fnc_AddObjectsCargo;
 
 				[_unit, _pistol_mag, 3] call _fnc_AddObjectsCargo;
 				[_unit, _rifle_mag_tr, 5] call _fnc_AddObjectsCargo;
@@ -593,15 +600,11 @@ if (_isMan) then {
 				[_unit, _smokegrenadeY, 10] call _fnc_AddObjectsCargo;
 				[_unit, _smokegrenadeB, 4] call _fnc_AddObjectsCargo;
 				[_unit, _bandage, 30] call _fnc_AddObjectsCargo;
+				[_unit, _tourn, 6] call _fnc_AddObjectsCargo;
 				[_unit, _morph, 15] call _fnc_AddObjectsCargo;
-				if (true) then {
-					[_unit, _epi, 5] call _fnc_AddObjectsCargo;
-					[_unit, "ACE_salineIV", 10] call _fnc_AddObjectsCargo;
-					[_unit, _flashBang, 2] call _fnc_AddObjectsCargo;
-					[_unit, true, [0, 1.5, 0], 0, true] call ace_dragging_fnc_setDraggable;
-					[_unit, true, [0,1,1], 0, true] call ace_dragging_fnc_setCarryable;
-				};
-
+				[_unit, _epi, 5] call _fnc_AddObjectsCargo;
+				[_unit, _saline, 10] call _fnc_AddObjectsCargo;
+				[_unit, _flashBang, 2] call _fnc_AddObjectsCargo;
 				[_unit, _pistol_mag, 6] call _fnc_AddObjectsCargo;
 				[_unit, _rifle_mag_tr, 12] call _fnc_AddObjectsCargo;
 				[_unit, _rifleC_mag_tr, 12] call _fnc_AddObjectsCargo;
@@ -611,6 +614,7 @@ if (_isMan) then {
 				[_unit, _MAT_mag_HE, 4] call _fnc_AddObjectsCargo;
 				[_unit, (_LAT select 0), 3] call _fnc_AddObjectsCargo;
 				[_unit, _demoCharge, 4] call _fnc_AddObjectsCargo;
+				[_unit, _cables, 15] call _fnc_AddObjectsCargo;
 
 				if ((call EFUNC(Common,isNight)) && _allowedNightStuff) then {
 					[_unit, _glflareW, 16] call _fnc_AddObjectsCargo;
@@ -634,13 +638,10 @@ if (_isMan) then {
 				[_unit, _smokegrenadeY, 8] call _fnc_AddObjectsCargo;
 				[_unit, _smokegrenadeB, 6] call _fnc_AddObjectsCargo;
 				[_unit, _bandage, 20] call _fnc_AddObjectsCargo;
+				[_unit, _tourn, 6] call _fnc_AddObjectsCargo;
 				[_unit, _morph, 15] call _fnc_AddObjectsCargo;
-				if (true) then {
-					[_unit, "ACE_salineIV", 10] call _fnc_AddObjectsCargo;
-					[_unit, _epi, 5] call _fnc_AddObjectsCargo;
-					[_unit, true, [0, 1.5, 0], 0, true] call ace_dragging_fnc_setDraggable;
-					[_unit, true, [0,1,1], 0, true] call ace_dragging_fnc_setCarryable;
-				};
+				[_unit, _saline, 10] call _fnc_AddObjectsCargo;
+				[_unit, _epi, 5] call _fnc_AddObjectsCargo;
 				[_unit, _pistol_mag, 8] call _fnc_AddObjectsCargo;
 				[_unit, _rifleGL_mag_tr, 10] call _fnc_AddObjectsCargo;
 				[_unit, _rifle_mag_tr, 8] call _fnc_AddObjectsCargo;
@@ -682,11 +683,10 @@ if (_isMan) then {
 				[_unit, _smokegrenadeB, 5] call _fnc_AddObjectsCargo;
 				[_unit, _bandage, 50] call _fnc_AddObjectsCargo;
 				[_unit, _morph, 25] call _fnc_AddObjectsCargo;
-				if (true) then {
-					[_unit, "ACE_salineIV", 25] call _fnc_AddObjectsCargo;
-					[_unit, _epi, 10] call _fnc_AddObjectsCargo;
-					[_unit, _flashBang, 10	] call _fnc_AddObjectsCargo;
-				};
+				[_unit, _tourn, 12] call _fnc_AddObjectsCargo;
+				[_unit, _saline, 25] call _fnc_AddObjectsCargo;
+				[_unit, _epi, 10] call _fnc_AddObjectsCargo;
+				[_unit, _flashBang, 10	] call _fnc_AddObjectsCargo;
 
 				[_unit, _pistol_mag, 12] call _fnc_AddObjectsCargo;
 				[_unit, _rifle_mag, 9] call _fnc_AddObjectsCargo;
@@ -744,19 +744,8 @@ if (_isMan) then {
 
 				[_unit, _bandage, 40] call _fnc_AddObjectsCargo;
 				[_unit, _morph, 20] call _fnc_AddObjectsCargo;
-				if (true) then {
-					[_unit, "ACE_salineIV", 40] call _fnc_AddObjectsCargo;
-					[_unit, _flashBang, 15] call _fnc_AddObjectsCargo;
-					if ((EGVAR(Settings_ACE,medical_level) isEqualTo 2) || (ace_medical_level isEqualTo 2)) then {
-						[_unit, "ACE_elasticBandage", 100] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_tourniquet", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_quikclot", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_atropine", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_salineIV", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_personalAidKit", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_surgicalKit", 50] call _fnc_AddObjectsCargo;
-					};
-				};
+				[_unit, _saline, 40] call _fnc_AddObjectsCargo;
+				[_unit, _flashBang, 15] call _fnc_AddObjectsCargo;
 
 				[_unit, _pistol_mag, 10] call _fnc_AddObjectsCargo;
 				[_unit, _rifle_mag_tr, 20] call _fnc_AddObjectsCargo;
@@ -781,32 +770,17 @@ if (_isMan) then {
 
 			case "med_box": {
 				[_unit, _bandage, 100] call _fnc_AddObjectsCargo;
-				if (true) then {
-					//[_unit, _morph, 50] call _fnc_AddObjectsCargo;
-					//[_unit, _epi, 50] call _fnc_AddObjectsCargo;
-					[_unit, "ACE_personalAidKit", 5] call _fnc_AddObjectsCargo;
-					_tourn = "ACE_tourniquet";
-					[_unit, _tourn, 20] call _fnc_AddObjectsCargo;
-					[_unit, "ACE_salineIV", 50] call _fnc_AddObjectsCargo;
-					if ((EGVAR(Settings_ACE,medical_level) isEqualTo 2) || (ace_medical_level isEqualTo 2)) then {
-						[_unit, "ACE_elasticBandage", 100] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_tourniquet", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_quikclot", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_atropine", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_salineIV", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_personalAidKit", 50] call _fnc_AddObjectsCargo;
-						[_unit, "ACE_surgicalKit", 50] call _fnc_AddObjectsCargo;
-					};
-				};
+				[_unit, _morph, 50] call _fnc_AddObjectsCargo;
+				[_unit, _epi, 50] call _fnc_AddObjectsCargo;
+				[_unit, _pak, 5] call _fnc_AddObjectsCargo;
+				[_unit, _tourn, 20] call _fnc_AddObjectsCargo;
+				[_unit, _saline, 50] call _fnc_AddObjectsCargo;
 			};
 
 			case "med_box_tiny": {
 				[_unit, _bandage, 60] call _fnc_AddObjectsCargo;
-				if (true) then {
-					_tourn = "ACE_tourniquet";
-					[_unit, _tourn, 8] call _fnc_AddObjectsCargo;
-					[_unit, "ACE_salineIV", 40] call _fnc_AddObjectsCargo;
-				};
+				[_unit, _tourn, 8] call _fnc_AddObjectsCargo;
+				[_unit, _saline, 40] call _fnc_AddObjectsCargo;
 			};
 
 			case "car": {
