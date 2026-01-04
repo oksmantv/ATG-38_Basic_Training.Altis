@@ -25,7 +25,8 @@ params [
 	["_waypointArray", []],
 	["_skipQueue", false],
 	["_skipDelays", false],
-	["_group", grpNull]
+	["_group", grpNull],
+	["_side", GVAR(Faction), [sideUnknown]]
 ];
 
 if (GVAR(spawnActive) && !_skipQueue) exitWith {
@@ -37,7 +38,7 @@ if (GVAR(autoQueue) && !_skipQueue) then {
 	GVAR(spawnActive) = true;
 };
 
-([GVAR(Faction)] call FUNC(getGroupType)) params ["_side", "_leader","_unitList"];
+([str _side] call FUNC(getGroupType)) params ["_side", "_leader","_unitList"];
 
 if (_group isEqualTo grpNull) then {
 	_group = CreateGroup _side;
@@ -45,13 +46,26 @@ if (_group isEqualTo grpNull) then {
 };
 
 if !((count _unitArray) isEqualTo 0) then {
-	private _unitClass = (selectRandom _leader);
 	{
-		_x params ["_pos","_dir",["_unitPos", [], [[],""]],["_specials", []]];
+		_x params [
+			"_pos",
+			"_dir",
+			["_unitPos", [], [[],""]],
+			["_specials", []],
+			["_role", nil, [""]]
+		];
+
+		private _unitClass = "";
 		if !(_forEachIndex isEqualTo 0) then {
 			_unitClass = (selectRandom _unitList);
+		} else {
+			_unitClass = (selectRandom _leader);
 		};
-		_unit = _group createUnit [_unitClass, [0,0,0], [], 10, "CAN_COLLIDE"];
+		if(!isNil "_role") then {
+			_unitClass = [_role, _side] call FUNC(getClassnameByRole);
+		};
+
+		_unit = _group createUnit [_unitClass, _pos, [], 10, "CAN_COLLIDE"];
 		_unit enableSimulationGlobal false;
 		_unit setRank "PRIVATE";
 		_unit setPosATL _pos;
@@ -63,18 +77,15 @@ if !((count _unitArray) isEqualTo 0) then {
 
 			_unit setFormDir _dir;
 			_unit setDir _dir;
-			sleep 0.1;
-			_unit setDir _dir;
 
 			if (_unitPos isEqualTo "Auto") then {
 				_unit setUnitPos (selectRandom ["Up","Middle"]);
 			} else {
 				_unit setUnitPos _unitPos;
 			};
-			[[_unit],{ Params ["_unit"]; _unit disableAI "PATH"; doStop _unit; }] remoteExec ["BIS_FNC_CALL",0];
 
-			if(!isNil "OKS_Enemy_Sentry") then {
-				[_unit] spawn OKS_fnc_Enemy_Sentry;
+			if(_waypointArray isEqualTo []) then {
+				[[_unit],{ Params ["_unit"]; _unit disableAI "PATH"; doStop _unit; }] remoteExec ["BIS_FNC_CALL",0];
 			};
 		};
 
@@ -130,14 +141,20 @@ if ((count _vehicleArray) > 0) then {
 			} forEach ((fullCrew [_vehicle,"",true]) select {((_x select 1) in ["commander","gunner","turret"])});
 		};
 
-		_unitClass =  (selectRandom _leader);
+		private _unitClass = (selectRandom _leader);
 		Private ["_Driver"];
 		{
 			if !(count (units _group) isEqualTo 0) then {
 				_unitClass = (selectRandom _unitList);
 			};
+			if(_vehicle isKindOf "tank") then {
+				_unitClass = ["crew", _side] call FUNC(getClassnameByRole);
+			};
+			if(_vehicle isKindOf "air") then {
+				_unitClass = ["p", _side] call FUNC(getClassnameByRole);
+			};
 			
-			_unit = _group createUnit [_unitClass, [0,0,0], [], 10, "CAN_COLLIDE"];
+			_unit = _group createUnit [_unitClass, _pos, [], 10, "CAN_COLLIDE"];
 			_unit enableSimulationGlobal false;
 			_unit setRank "PRIVATE";
 			_unit setVariable [QGVAR(isSpawned), true];
@@ -185,19 +202,15 @@ if ((count _vehicleArray) > 0) then {
 };
 
 if !(_waypointArray isEqualTo []) then {
-	if((count _vehicleArray) == 0) then {
-		if(!isNil "OKS_fnc_Enemy_Talk") then {
-			[_group] spawn OKS_fnc_Enemy_Talk;
-		};
-		if(!isNil "OKS_fnc_Tracker") then {
-			[_group] remoteExec ["OKS_fnc_Tracker",2];
-		};
+	_InitialWaypoint = (waypoints _group) select 0;
+	if (!isNil "_InitialWaypoint") then {
+		_InitialWaypoint setWaypointPosition [(getPos leader _group), 0];
 	};
+
 	{
 		_x params [["_position",[0,0,0]], ["_attributes",[]]];
 		private _waypoint = _group addWaypoint [_position, 0];
 		_waypoint setWaypointCompletionRadius 10;	// Sets default
-
 		{
 			_x params ["_type","_setting"];
 			switch (_type) do {

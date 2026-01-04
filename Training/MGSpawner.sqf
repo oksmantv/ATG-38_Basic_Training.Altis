@@ -36,6 +36,8 @@ For "_i" from 0 to (_Count - 1) do {
 	_Unit disableAI "PATH";
 	_Unit setPosATL _SelectedPosition;
 	_Unit setDir (_Unit getDir _Target);
+	_Unit addPrimaryWeaponItem "RKSL_optic_LDS";
+	_Unit addPrimaryWeaponItem "rhs_acc_pso1m2";
 
 	if(_Count == _HeavyNumber && (_SelectedPosition select 2 < 1)) then {
 		_Static = createVehicle [selectRandom _Statics, _SelectedPosition, [], 0, "NONE"];
@@ -85,8 +87,7 @@ For "_i" from 0 to (_Count - 1) do {
 	}];
 	
 	sleep 5;
-	_Unit addPrimaryWeaponItem "RKSL_optic_LDS";
-	_Unit addPrimaryWeaponItem "rhs_acc_pso1m2";
+
 };
 
 

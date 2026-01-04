@@ -1,5 +1,4 @@
 #define	COMPONENT CORE
-#define VERSION 1
 #define CUSTOM_FOLDER Core\Framework\Functions
 #include "script_Component.hpp"
 
@@ -44,16 +43,16 @@ if (hasInterface) then {
 
 	[{
 		private _framework = "==============================================
-				<br/>
-				<br/>	Framework by: GuzzenVonLidl
-				<br/>	Version: "+GVARMAIN(Version)+"
-				<br/>
-				<br/>	==============================================
-				<br/>
-				<br/>	Guerrillas of Liberation
-				<br/>	Teamspeak: teamspeak.gol-clan.co.uk
-				<br/>	Website: http://www.gol-clan.co.uk/
-				<br/>	==============================================";
+			<br/>
+			<br/>	Framework by: GuzzenVonLidl, Oksman, Blu.
+			<br/>	Framework Version: "+GVARMAIN(Version)+"
+			<br/>
+			<br/>	==============================================
+			<br/>
+			<br/>	Guerrillas of Liberation
+			<br/>	Discord: GOL Official (https://discord.com/invite/scpD7EUHNp)
+			<br/>	Website: https://gol-clan.com
+			<br/>	==============================================";
 		player createDiaryRecord ["framework_diary", ["Framework",_framework]];
 	}, []] call CBA_Fnc_execNextFrame;
 };
@@ -115,6 +114,10 @@ GVARMAIN(postLoad) = nil;
 			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["Forced", 0, true];
 			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["birdType", "", true];
 			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["showNotification", false, true];
+			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["bis_fnc_moduleexecute_activate", true];
+			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["bis_fnc_moduleinit_status", true];
+			GVARMAIN(ZeuzModuleAdminLogged) setVariable ["bis_fnc_initmodules_activate", true];
+			
 			player assignCurator GVARMAIN(ZeuzModuleAdminLogged);
 			publicVariable QGVARMAIN(ZeuzModuleAdminLogged);
 

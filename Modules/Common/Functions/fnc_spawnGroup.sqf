@@ -24,15 +24,34 @@ params [
 	["_unitArray", []],
 	["_vehicleArray", []],
 	["_waypointArray", []],
+	["_side",GVAR(Faction),[sideUnknown]],
 	["_skipQueue", false],
 	["_skipDelays", false]
 ];
 
-([GVAR(Faction)] call FUNC(getGroupType)) params ["_side", "_leader","_unitList"];
+if(_side isEqualType "") then {
+	switch (toLower(_side)) do {
+		case "west": { 
+			_side = WEST;
+		};
+		case "east": { 
+			_side = EAST;
+		};
+		case "independent": { 
+			_side = INDEPENDENT;
+		};
+		case "civilian": { 
+			_side = civilian;
+		};					
+		default { 
+			_side = EAST;
+		};
+	};
+};
 
 _group = CreateGroup _side;
 _group setVariable [QEGVAR(Performance,autoDelete), false];
 
-[_unitArray,_vehicleArray,_waypointArray,_skipQueue,_skipDelays,_group] spawn FUNC(spawnHandler);
+[_unitArray,_vehicleArray,_waypointArray,_skipQueue,_skipDelays,_group,_side] spawn FUNC(spawnHandler);
 
 _group

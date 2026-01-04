@@ -77,11 +77,11 @@ _rifleGL_mag = "rhs_30Rnd_545x39_7N22_plum_AK";
 _rifleGL_mag_tr = "rhs_30Rnd_545x39_AK_plum_green";
 _rifleL_mag = "rhs_60Rnd_545X39_AK_Green";
 
-_LMG = ["arifle_RPK12_F", _silencer, _pointer, "rhsusf_acc_LEUPOLDMK4_2_mrds", _bipod];
-_LMG_mag = "UK3CB_RK62_75Rnd_Magazine_GT";
+_LMG = ["rhs_weap_rpk74m_npz", _silencer, _pointer, _sight, _bipod];
+_LMG_mag = "rhs_60Rnd_545X39_AK_Green";
 
-_MMG = ["arifle_RPK12_F", _silencer, _pointer, "rhsusf_acc_LEUPOLDMK4_2_mrds", _bipod];
-_MMG_mag = "UK3CB_RK62_75Rnd_Magazine_GT";
+_MMG = ["rhs_weap_pkp", _silencer, _pointer, _sight, _bipod];
+_MMG_mag = "rhs_100Rnd_762x54mmR_green";
 
 _LAT = ["rhs_weap_rpg26", _silencer, _pointer, _sight, _bipod];
 _LAT_mag = "rhs_rpg26_mag";
@@ -89,6 +89,7 @@ _LAT_ReUsable = false;
 
 _MAT = ["launch_RPG7_F", _silencer, _pointer, _sight, _bipod];
 _MAT_mag = "RPG7_F";
+_MAT_mag_HE = "rhs_rpg7_TBG7V_mag";
 
 _HAT = ["launch_O_Vorona_green_F", _silencer, _pointer, _sight, _bipod];
 _HAT_mag = "Vorona_HEAT";
@@ -107,6 +108,6 @@ _pointer = "";
 _sight = "rhs_acc_pso1m21";
 _bipod = "";
 
-_rifleMarksman = ["uk3cb_HS50", _silencer, _pointer, "rhsusf_acc_LEUPOLDMK4_2_mrds", _bipod];
-_rifleMarksman_mag = "uk3cb_hs50_50bmg_MK211_5Rnd_magazine_GT";
-_rifleMarksman_mag_tr = "uk3cb_hs50_50bmg_MK211_5Rnd_magazine_GT";
+_rifleMarksman = ["rhs_weap_svdp_wd", _silencer, _pointer, _sight, _bipod];
+_rifleMarksman_mag = "UK3CB_SVD_10rnd_762x54_GT";
+_rifleMarksman_mag_tr = "UK3CB_SVD_10rnd_762x54_GT";

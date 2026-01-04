@@ -57,8 +57,8 @@ _rifleL_mag_tr = "30Rnd_65x39_caseless_mag_Tracer";
 _LMG = ["arifle_MX_SW_F", _silencer, _pointer, _sight, _bipod];
 _LMG_mag = "100Rnd_65x39_caseless_mag_Tracer";
 
-_MMG = ["rhs_weap_m249_pip_L", _silencer, _pointer, _sight, _bipod];
-_MMG_mag = "rhsusf_200rnd_556x45_mixed_box";
+_MMG = ["LMG_03_F", _silencer, _pointer, _sight, _bipod];
+_MMG_mag = "200Rnd_556x45_Box_Tracer_Red_F";
 
 _sight = "";
 
@@ -68,6 +68,7 @@ _LAT_ReUsable = false;
 
 _MAT = ["launch_MRAWS_green_rail_F", _silencer, _pointer, _sight, _bipod];
 _MAT_mag = "MRAWS_HEAT_F";
+_MAT_mag_HE = "MRAWS_HE_F";
 
 _HAT = ["launch_B_Titan_short_F", _silencer, _pointer, _sight, _bipod];
 _HAT_mag = "Titan_AT";

@@ -29,9 +29,12 @@
 
 params ["_faction"];
 
-private _configs = (missionConfigFile >> "GW_FRAMEWORK" >> "SpawnUnits" >> toUpper(_faction));
-private _side = ([east,west,resistance,civilian] select (getNumber(_configs >> "Side")));
-private _leader = getArray(_configs >> "Leader");
-private _unitList = getArray(_configs >> "Units");
+if(_faction isEqualType sideUnknown) then {
+	_faction = str _faction;
+};
+private _factionStr = toUpper _faction;
+private _side = ([east,west,independent,civilian] select (getNumber(missionConfigFile >> "GW_FRAMEWORK" >> "SpawnUnits" >> _factionStr >> "Side")));
+private _leader = getArray(missionConfigFile >> "GW_FRAMEWORK" >> "SpawnUnits" >> _factionStr >> "Leaders");
+private _unitList = getArray(missionConfigFile >> "GW_FRAMEWORK" >> "SpawnUnits" >> _factionStr >> "Units");
 
 [_side, _leader, _unitList]

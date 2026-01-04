@@ -97,6 +97,7 @@ while {true} do {
 
 	while {OKS_AT_Spawn_Active} do {
 		waitUntil {sleep 1; if(_Debug_Variable) then {systemChat "Waiting for clearance near _Spawn"}; (getPos _Spawn nearEntities ["LandVehicle", _DispersionInMeters]) isEqualTo []};
+		sleep 10;
 		if(_Debug_Variable) then {systemChat format ["Spawning Vehicle.."]};
 		_Classname = selectRandom _Vehicles;
 		_Vehicle = CreateVehicle [_Classname,getPos _Spawn];

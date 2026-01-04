@@ -25,8 +25,8 @@ _AirRolesAllowed = missionNamespace getVariable ["AirRoles_ALLOW",true];
 
 if(_ArsenalAllowed isEqualTo true) then {
 	_unit addAction ["<t color='#00EAFF'>Attachment Menu</t>", {[_this select 0, player] call ace_arsenal_fnc_openBox},ALL,5];
-	_unit addAction ["<t color='#00EAFF'>Attachment Menu (GL)</t>", {_ArsenalGL =  missionNamespace getVariable [format["GOL_ArsenalGL_%1",(side group player)], objNull]; [_ArsenalGL, player] call ace_arsenal_fnc_openBox},GL,5];
-	_unit addAction ["<t color='#00EAFF'>Attachment Menu (LMG)</t>", {_ArsenalLMG = missionNamespace getVariable [format["GOL_ArsenalLMG_%1",(side group player)], objNull]; [_ArsenalLMG, player] call ace_arsenal_fnc_openBox},LMG,5];
+	_unit addAction ["<t color='#00EAFF'>Attachment Menu (GL)</t>", {_playerSide = switch (side group player) do { case west: {"west"}; case east: {"east"}; case independent: {"independent"}; default {"west"}; }; _ArsenalGL =  missionNamespace getVariable [format["GOL_ArsenalGL_%1",_playerSide], objNull]; [_ArsenalGL, player] call ace_arsenal_fnc_openBox},GL,5];
+	_unit addAction ["<t color='#00EAFF'>Attachment Menu (LMG)</t>", {_playerSide = switch (side group player) do { case west: {"west"}; case east: {"east"}; case independent: {"independent"}; default {"west"}; }; _ArsenalLMG = missionNamespace getVariable [format["GOL_ArsenalLMG_%1",_playerSide], objNull]; [_ArsenalLMG, player] call ace_arsenal_fnc_openBox},LMG,5];
 };
 
 _unit addAction ["<t color='#ff962c'>Remove Night gear</t>", {
@@ -67,6 +67,7 @@ if(_GroundRolesAllowed isEqualTo true) then {
 	_unit addAction ["<t color='#FDF916'>Special > Asst. Medium Machine Gunner</t>","[player,'ammg'] call GW_Gear_Fnc_Handler;",bullShit,4];
 	_unit addAction ["<t color='#FDF916'>Special > Medium Machine Gunner</t>","[player,'mmg'] call GW_Gear_Fnc_Handler;",bullShit,4];	
 	_unit addAction ["<t color='#FDF916'>Special > Dragon</t>","[player,'dragon'] call GW_Gear_Fnc_Handler;",bullShit,4];
+	_unit addAction ["<t color='#FDF916'>Special > Engineer</t>","[player,'engineer'] call GW_Gear_Fnc_Handler;",bullShit,4];
 	_unit addAction ["<t color='#FDF916'>Special > Light Rifleman</t>","[player,'lr'] call GW_Gear_Fnc_Handler;",bullShit,4];
 	_unit addAction ["<t color='#FDF916'>Special > Anti-Air</t>","[player,'aa'] call GW_Gear_Fnc_Handler;",bullShit,4];
 	_unit addAction ["<t color='#FDF916'>Special > Asst. Heavy AT</t>","[player,'amat'] call GW_Gear_Fnc_Handler;",bullShit,4];
