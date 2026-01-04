@@ -3,7 +3,8 @@ playSound3D [MISSION_ROOT + "activated.wav", _Object];
 // [[Arrow_1,Arrow_2,Arrow_3]] execVM "3DReportSpawner.sqf";
 
 _Units = [
-	"O_soldier_M_F"
+	"O_HeavyGunner_F",
+	"O_Soldier_AR_F"
 ];
 
 _Statics = [
@@ -20,6 +21,9 @@ For "_i" from 0 to (_Count - 1) do {
 
 	while {true} do {
 		_SelectedPosition = selectRandom _Positions;
+		if(typeName _SelectedPosition isEqualTo "OBJECT") then {
+			_SelectedPosition = getPosATL _SelectedPosition;
+		};
 		if(_SelectedPosition NearEntities ["Man", 2] isEqualTo []) exitWith {};
 	};
 
@@ -27,7 +31,7 @@ For "_i" from 0 to (_Count - 1) do {
 		_HeavyNumber = (round(random _Count - 1));
 	};
 	_Unit = _Group CreateUnit [(_Units call BIS_FNC_selectRandom), [0,0,0], [], -1, "NONE"];
-	_Unit setCombatMode "BLUE";
+	_Unit setCombatMode "RED";
 	_Unit setUnitPos "UP";
 	_Unit disableAI "PATH";
 	_Unit setPosATL _SelectedPosition;
@@ -38,6 +42,11 @@ For "_i" from 0 to (_Count - 1) do {
 		_Static setDir (_Static getDir _Target);
 		_Unit moveInGunner _Static;
 		_Unit setBehaviour "COMBAT";
+		_Unit setSkill ["aimingAccuracy",1];
+		_Unit setSkill ["aimingShake",1];
+		_Unit setSkill ["aimingSpeed",1];
+		_Unit setSkill ["spotDistance",1];
+		_Unit setSkill ["spotTime",1];
 		_Static reveal [_Target,4];
 		[_Static,_Target] spawn {
 
@@ -50,7 +59,7 @@ For "_i" from 0 to (_Count - 1) do {
 			_Vehicle selectWeaponTurret [(weapons _Vehicle select 0),[0]];
 			_Vehicle fire currentMuzzle (gunner _Vehicle);
 			(sleep 0.15 + (random 0.85))
-		}
+		};
 	};
 	} else {
 		_Unit doWatch _Target;
@@ -58,20 +67,33 @@ For "_i" from 0 to (_Count - 1) do {
 		_Unit reveal [_Target,4];
 		_Unit setSkill ["aimingAccuracy",1];
 		_Unit setSkill ["aimingShake",1];
+		_Unit setSkill ["aimingSpeed",1];
+		_Unit setSkill ["spotDistance",1];
+		_Unit setSkill ["spotTime",1];
 		_Unit spawn {
 			while {alive _this} do {
 				_this fire PrimaryWeapon _this;
-				sleep 0.01;
+				sleep 0.02;
 			}
 		};
 	};
+	_Unit  addEventHandler ["Reloaded", {
+		params ["_unit", "_weapon", "_muzzle", "_newMagazine", "_oldMagazine"];
 
-	waitUntil {sleep 1; (!(Alive _Unit) || !([_Unit] call ace_common_fnc_isAwake))};
+		systemChat format ["%1 reloaded %2 with %3", name _unit, _weapon, _newMagazine];
+		_unit addMagazine _newMagazine;
+	}];
+	
 	sleep 5;
-	deleteVehicle vehicle _Unit;
-	deleteVehicle _Unit;
+	_Unit addPrimaryWeaponItem "RKSL_optic_LDS";
+	_Unit addPrimaryWeaponItem "rhs_acc_pso1m2";
 };
 
+
+waitUntil {
+	sleep 1;
+	{(Alive _X || [_X] call ace_common_fnc_isAwake)} count units _Group == 0
+};
 private _Names = "";
 private _i = 1;
 private _CourseNumber = str _Target select [((count (str _Target)) - 1)];
@@ -86,6 +108,12 @@ private _CourseNumber = str _Target select [((count (str _Target)) - 1)];
 	};
 	_i = _i + 1;
 } foreach units group _Player;
+true remoteExec ["showChat",0];
 format["%1 has completed MG course number %2.",_Names,_CourseNumber] remoteExec ["systemChat",0];
+
+{
+	deleteVehicle vehicle _X;
+	deleteVehicle _X;
+} foreach units _Group;
 
 

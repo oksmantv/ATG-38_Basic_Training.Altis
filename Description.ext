@@ -18,7 +18,7 @@ class GW_FRAMEWORK {	// NOTE: SENSETIVE, UPPERCASE ONLY FOR BOOL
 		//	NOTE: Changing any of these settings will require mission reload for it to be affected
 		#define GAME_MODE "COOP"								// GameMode
 		#define PLAYER_COUNT "36"								// Player Count - Do not go above 36 - Server Limit 
-		#define BRIEFING_NAME "Basic Training 13.0"					// Mission Name
+		#define BRIEFING_NAME "Basic Training 17.0"					// Mission Name
 		#define LOBBY_DESCRIPTION ""							// Description in mission select
 		#define ON_LOAD_TEXT ""									// Description on loading
 		#define MISSION_VERSION 1								// Version of mission
