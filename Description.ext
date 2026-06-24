@@ -25,7 +25,7 @@ class GW_FRAMEWORK {	// NOTE: SENSETIVE, UPPERCASE ONLY FOR BOOL
 		#define ON_LOAD_TEXT __EVAL("Framework Version " + QUOTE(VERSION))	// Description on loading
 		#define MISSION_VERSION 1								// Version of mission
 		#define SELECT_PICTURE ""								// Path to loading screen
-		Author = "Oksman, Blu";				// Author
+		Author = "Oksman, Blu, SoKkada";				// Author
 		AuthorUID[] = {"_SP_PLAYER_"};			// UIDs with admin access
 
 		Name = __EVAL(GAME_MODE + PLAYER_COUNT + " " + BRIEFING_NAME);
